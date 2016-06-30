@@ -11,7 +11,7 @@ namespace cs_1._1
         static void Main(string[] args)
         {
             int arrSize = 0;
-            Console.Write("Введите размер массива -> ");
+            Console.Write("1) Введите размер массива -> ");
             var input = Console.ReadLine();
             arrSize = int.Parse(input);
 
@@ -40,16 +40,21 @@ namespace cs_1._1
                 arr[i] = r.Next(rangeMin, rangeMax);
             }
 
+            Console.WriteLine("--------------------");
+            Console.WriteLine("2) Сгенерированный массив: ");
+
             for (int i = 0; i < arrSize; i++)
             {
                 Console.WriteLine("arr[{0}] = {1}", i, arr[i]);
             }
 
             int arrMax = arr.Max();
-            Console.WriteLine("Максимальное число в массиве =  {0}", arrMax);
+            Console.WriteLine("--------------------");
+            Console.WriteLine("3) Максимальное число в массиве = {0}", arrMax);
 
             int arrMin = arr.Min();
-            Console.WriteLine("Минимальное число в массиве =  {0}", arrMin);
+            Console.WriteLine("4) Минимальное число в массиве = {0}", arrMin);
+            Console.WriteLine("--------------------");
 
             int positionMax = 0;
             int positionMin = 0;
@@ -67,7 +72,7 @@ namespace cs_1._1
             }
 
             int newArrSize = Math.Abs(positionMax - positionMin) + 1;
-            Console.WriteLine("Размер нового массива = {0}", newArrSize);
+            Console.WriteLine("5) Размер нового массива = {0}", newArrSize);
 
             int[] newArr = new int[newArrSize];
 
@@ -92,7 +97,8 @@ namespace cs_1._1
             }
 
             double arrAverage = arr.Average();
-            Console.WriteLine("Среднее арифметическое первого массива = {0}", arrAverage);
+            Console.WriteLine("--------------------");
+            Console.WriteLine("6) Среднее арифметическое первого массива = {0}", arrAverage);
 
             Console.Write("Вывод в консоль : ");
             for (int i = 0; i < newArrSize; i++)
