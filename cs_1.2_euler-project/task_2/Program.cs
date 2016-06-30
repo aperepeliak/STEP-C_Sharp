@@ -10,6 +10,7 @@ namespace task_2
     {
         static void Main(string[] args)
         {
+            // By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.
         }
     }
 }
