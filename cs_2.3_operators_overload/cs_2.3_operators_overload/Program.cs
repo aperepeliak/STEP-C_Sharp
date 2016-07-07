@@ -16,7 +16,6 @@ namespace cs_2._3_operators_overload
             Console.WriteLine("Fraction a : " + a.Numerator.ToString() + "/" + a.Denominator.ToString());
             Console.WriteLine("Fraction b : " + b.Numerator.ToString() + "/" + b.Denominator.ToString());
 
-
             Fraction c = a + b;
             Console.WriteLine("Sum              : " + c.Numerator.ToString() + "/" + c.Denominator.ToString());
 
@@ -58,9 +57,14 @@ namespace cs_2._3_operators_overload
             Console.WriteLine("a == b           : " + (a == b).ToString());
             Console.WriteLine("a != b           : " + (a != b).ToString());
 
-
-
-
+            if (a)
+            {
+                Console.WriteLine("{0}/{1} is a proper fraction", a.Numerator, a.Denominator);
+            }
+            else
+            {
+                Console.WriteLine("{0}/{1} is a improper fraction", a.Numerator, a.Denominator);
+            }
         }
     }
 }

@@ -168,15 +168,18 @@ namespace cs_2._3_operators_overload
                 return a.numerator == b.numerator;
             return (a.numerator * (LCD(a.denominator, b.denominator) / a.denominator)) == (b.numerator * (LCD(a.denominator, b.denominator) / b.denominator));
         }
-
         public static bool operator !=(Fraction a, Fraction b)
         {
             return (!(a == b));
         }
 
-
-
-
-
+        public static bool operator true(Fraction a)
+        {
+            return a.numerator < a.denominator;
+        }
+        public static bool operator false(Fraction a)
+        {
+            return a.numerator > a.denominator;
+        }
     }
 }
