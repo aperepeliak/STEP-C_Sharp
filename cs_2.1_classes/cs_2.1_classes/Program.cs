@@ -33,7 +33,6 @@ namespace cs_2._1_classes
             {
                 Console.WriteLine(e.Message);
             }
-
             Console.WriteLine("-----------------------");
 
             bool flashDrive = false;
@@ -42,16 +41,14 @@ namespace cs_2._1_classes
             Console.WriteLine("USB-flash drive is connected -> " + flashDrive.ToString());
             Console.WriteLine("-----------------------");
 
-            Console.WriteLine("Number of memory banks in laptop : " + laptops[0].MemoryBanks.ToString());
+            Console.WriteLine("Number of memory banks in laptop " + laptops[0].Brandname.ToString() + " : " + laptops[0].MemoryBanks.ToString());
             laptops[0].IncreaseMemory();
             Console.WriteLine("After single increase : " + laptops[0].MemoryBanks.ToString());
             laptops[0].IncreaseMemory(3);
             Console.WriteLine("After triple increase : " + laptops[0].MemoryBanks.ToString());
             laptops[0].PullAllMemory();
-            Console.WriteLine("After pulling all memory : " + laptops[0].MemoryBanks.ToString());
+            Console.WriteLine("After pulling all memory from " + laptops[0].Brandname.ToString() + " : " + laptops[0].MemoryBanks.ToString());
             Console.WriteLine("-----------------------");
-
-            Console.WriteLine(Convert.ChangeType(laptops[0].Brandname, laptops[0].Brandname.GetTypeCode())); 
         }
     }
 }

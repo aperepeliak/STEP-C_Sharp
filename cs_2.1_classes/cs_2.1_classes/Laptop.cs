@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace cs_2._1_classes
 {
-    enum Brand { NoBrand = 1, Dell, Apple, Acer, HP, Asus, MSI, Lenovo };
-    enum Material { NoMaterial = 1, Plastic, Metal, Composite };
-    enum Color { NoColor = 1, White, Black, Metallic, Pink };
+    public enum Brand { NoBrand = 1, Dell, Apple, Acer, HP, Asus, MSI, Lenovo };
+    public enum Material { NoMaterial = 1, Plastic, Metal, Composite };
+    public enum Color { NoColor = 1, White, Black, Metallic, Pink };
 
     partial class Laptop
     {
@@ -18,7 +18,7 @@ namespace cs_2._1_classes
         private Color color;
         private bool isOpen;
         private int price;
-       
+
 
         // Статические поля
         static int webcam = 1;
@@ -35,7 +35,7 @@ namespace cs_2._1_classes
             }
             get
             {
-                return Brandname;
+                return brandname;
             }
         }
         public Material MaterialType
@@ -61,7 +61,7 @@ namespace cs_2._1_classes
             }
             get
             {
-                return Color;
+                return color;
             }
         }
         public int Price
@@ -82,8 +82,7 @@ namespace cs_2._1_classes
                     return price;
             }
         }
-       
-
+        
         // Статический конструктор
         static Laptop()
         {
@@ -143,7 +142,5 @@ namespace cs_2._1_classes
             Console.WriteLine("Color    : " + color.ToString());
             Console.WriteLine("Price    : " + price.ToString() + " UAH");
         }
-
-        
     }
 }
