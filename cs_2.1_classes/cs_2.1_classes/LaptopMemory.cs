@@ -15,7 +15,7 @@ namespace cs_2._1_classes
             set
             {
                 if (value < 0)
-                    throw new Exception("Количество банков памяти не может отрицательным.");
+                    throw new Exception("Количество банков памяти не может быть отрицательным.");
                 else
                     memoryBanks = value;
             }
