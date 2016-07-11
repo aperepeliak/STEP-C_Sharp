@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace cs_3._2_inheritance
 {
-    class Program
+    interface IWorker
     {
-        static void Main(string[] args)
-        {
-
-        }
+        void Build();
     }
 }

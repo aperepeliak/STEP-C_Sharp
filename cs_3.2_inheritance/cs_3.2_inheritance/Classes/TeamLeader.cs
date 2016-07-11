@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace cs_3._2_inheritance
+namespace cs_3._2_inheritance.Classes
 {
-    class Program
+    class TeamLeader : IWorker
     {
-        static void Main(string[] args)
+       public void Build()
         {
 
         }

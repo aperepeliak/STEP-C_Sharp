@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace cs_3._2_inheritance
 {
-    class Program
+    interface IPart
     {
-        static void Main(string[] args)
+        bool isBuilt
         {
-
+            set;
+            get;
         }
+
+
     }
 }

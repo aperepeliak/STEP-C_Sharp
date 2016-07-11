@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace cs_3._2_inheritance
+namespace cs_3._2_inheritance.Classes
 {
-    class Program
+    class Roof
     {
-        static void Main(string[] args)
-        {
 
-        }
     }
 }

@@ -43,6 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Basement.cs" />
+    <Compile Include="Classes\Door.cs" />
+    <Compile Include="Classes\House.cs" />
+    <Compile Include="Classes\Roof.cs" />
+    <Compile Include="Classes\Team.cs" />
+    <Compile Include="Classes\TeamLeader.cs" />
+    <Compile Include="Classes\Walls.cs" />
+    <Compile Include="Classes\Window.cs" />
+    <Compile Include="Classes\Worker.cs" />
+    <Compile Include="Interfaces\IPart.cs" />
+    <Compile Include="Interfaces\IWorker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
