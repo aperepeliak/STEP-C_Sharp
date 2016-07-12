@@ -1,4 +1,5 @@
-﻿using System;
+﻿using cs_3._2_inheritance.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace cs_3._2_inheritance
 {
     interface IWorker
     {
-        void Build();
+        void Work(House obj);
     }
 }

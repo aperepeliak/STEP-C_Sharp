@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace cs_3._2_inheritance.Classes
 {
-    class Roof
+    class Roof : IPart
     {
-        private bool _isBuilt = false;
-        private int _requiredTime = 5;
-        private int _buildingStatus = 0;
-
         public bool isBuilt { get; set; }
         public int requiredTime { get; }
         public int buildingStatus { get; set; }
+
+        public Roof()
+        {
+            isBuilt = false;
+            requiredTime = 5;
+            buildingStatus = 0;
+        }
     }
 }

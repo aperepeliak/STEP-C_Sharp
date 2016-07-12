@@ -8,12 +8,15 @@ namespace cs_3._2_inheritance.Classes
 {
     class Basement : IPart
     {
-        private bool _isBuilt = false;
-        private int _requiredTime = 10;     
-        private int _buildingStatus = 0;    
-
         public bool isBuilt { get; set; }
-        public int requiredTime { get; }
+        public int requiredTime { get; set; }
         public int buildingStatus { get; set; }
+
+        public Basement()
+        {
+            isBuilt = false;
+            requiredTime = 8;
+            buildingStatus = 0;
+        }
     }
 }

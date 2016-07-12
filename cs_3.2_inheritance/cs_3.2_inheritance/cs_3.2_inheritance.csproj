@@ -49,7 +49,7 @@
     <Compile Include="Classes\Roof.cs" />
     <Compile Include="Classes\Team.cs" />
     <Compile Include="Classes\TeamLeader.cs" />
-    <Compile Include="Classes\Walls.cs" />
+    <Compile Include="Classes\Wall.cs" />
     <Compile Include="Classes\Window.cs" />
     <Compile Include="Classes\Worker.cs" />
     <Compile Include="Interfaces\IPart.cs" />
