@@ -77,10 +77,6 @@ namespace cs_3._3_abstract
                 }
             }
 
-            public void MoveLeft()
-            {
-
-            }
             public void MoveRight()
             {
                 for (int i = 0; i < SIZE; i++)
