@@ -63,8 +63,6 @@ namespace cs_3._3_abstract
             {
                 Random r = new Random();
                 int letter = r.Next(1, 4);
-                int probability = r.Next(0, 10);
-
                 switch (letter)
                 {
                     case 1:
@@ -76,22 +74,6 @@ namespace cs_3._3_abstract
                     case 3:
                         _arr[r.Next(0, SIZE), 0] = new C();
                         break;
-                }
-                if (probability < 4)
-                {
-                    letter = r.Next(1, 4);
-                    switch (letter)
-                    {
-                        case 1:
-                            _arr[r.Next(0, SIZE), 0] = new A();
-                            break;
-                        case 2:
-                            _arr[r.Next(0, SIZE), 0] = new B();
-                            break;
-                        case 3:
-                            _arr[r.Next(0, SIZE), 0] = new C();
-                            break;
-                    }
                 }
             }
 
@@ -105,9 +87,7 @@ namespace cs_3._3_abstract
                 {
                     for (int j = SIZE - 1; j > 0; j--)
                     {
-                        if (_arr[i, j] is Hero)
-                        { }
-                        else
+                        if (!(_arr[i, j] is Hero))
                         {
                             _arr[i, j] = _arr[i, j - 1];
                             if (j == 1)
