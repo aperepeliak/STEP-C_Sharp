@@ -158,27 +158,29 @@ namespace cs_3._3_abstract
             m.Add(new Hero(), 3, 6);
             int losses = 0;
 
-            do
+            while (losses < maxLosses)
             {
-                while (!Console.KeyAvailable && losses < maxLosses)
+                if (Console.KeyAvailable)
                 {
-                    m.MoveRight();
-                    m.GenerateItems();
-                    Console.SetCursorPosition(0, 0);
-                    m.Show();
-                    Thread.Sleep(500);
+                    ConsoleKeyInfo key = Console.ReadKey(true);
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.DownArrow:
+                            m.MoveDown();
+                            break;
+                        case ConsoleKey.UpArrow:
+                            m.MoveUp();
+                            break;
+                        default:
+                            break;
+                    }
                 }
-                if (Console.ReadKey(true).Key == ConsoleKey.DownArrow)
-                {
-                    m.MoveDown();
-                }
-                if (Console.ReadKey(true).Key == ConsoleKey.UpArrow)
-                {
-                    m.MoveUp();
-                }
-
-            } while (losses < maxLosses);
+                m.MoveRight();
+                m.GenerateItems();
+                Console.SetCursorPosition(0, 0);
+                m.Show();
+                Thread.Sleep(200);
+            }
         }
-
     }
 }
