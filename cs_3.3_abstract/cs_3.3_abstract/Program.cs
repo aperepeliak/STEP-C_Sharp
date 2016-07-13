@@ -9,7 +9,7 @@ namespace cs_3._3_abstract
 {
     class Program
     {
-        private static readonly int maxLosses = 3;
+        private static readonly int maxLosses = 10;
 
         abstract class Item
         {
@@ -33,7 +33,7 @@ namespace cs_3._3_abstract
         {
             public override string Draw()
             {
-                return "C";
+                return "*";
             }
         }
         class Hero : Item
@@ -111,6 +111,19 @@ namespace cs_3._3_abstract
                 _arr[hero_y - 1, 6] = null;
             }
 
+            public int CountLosses()
+            {
+                int tmp = 0;
+                for (int i = 0; i < SIZE; i++)
+                {
+                    if (_arr[i, SIZE - 1] is C)
+                    {
+                        tmp++;
+                    }
+                }
+                return tmp;
+            }
+
             public void Show()
             {
                 for (int i = 0; i < SIZE; i++)
@@ -129,7 +142,6 @@ namespace cs_3._3_abstract
                     }
                     Console.WriteLine("|");
                 }
-
             }
         }
         static void Main(string[] args)
@@ -137,7 +149,7 @@ namespace cs_3._3_abstract
             Menu m = new Menu();
             m.Add(new Hero(), 3, 6);
             int losses = 0;
-
+            DateTime start = DateTime.Now;
             while (losses < maxLosses)
             {
                 if (Console.KeyAvailable)
@@ -159,8 +171,15 @@ namespace cs_3._3_abstract
                 m.GenerateItems();
                 Console.SetCursorPosition(0, 0);
                 m.Show();
+                losses += m.CountLosses();
                 Thread.Sleep(200);
             }
+            DateTime finish = DateTime.Now;
+            Console.WriteLine("Game over!");
+            Console.WriteLine("Your result : " + (finish - start).ToString());
+
+            //Delay
+            Console.ReadKey();
         }
     }
 }
