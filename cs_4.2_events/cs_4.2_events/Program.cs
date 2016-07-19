@@ -28,6 +28,8 @@ namespace cs_4._2_events
             b.InvokeEvent();
             b.InvokeEvent();
 
+            //test repo git
+
             Console.WriteLine("---------------------");
             Console.WriteLine("Bug pos: {0}, {1}", b.x++, b.y++);
             Console.WriteLine("Bug pos: {0}, {1}", b.x++, b.y++);
