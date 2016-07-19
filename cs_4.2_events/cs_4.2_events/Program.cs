@@ -29,6 +29,7 @@ namespace cs_4._2_events
             b.InvokeEvent();
 
             //test repo git
+            // git test 2
 
             Console.WriteLine("---------------------");
             Console.WriteLine("Bug pos: {0}, {1}", b.x++, b.y++);
