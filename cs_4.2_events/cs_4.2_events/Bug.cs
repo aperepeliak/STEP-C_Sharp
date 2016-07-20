@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace cs_4._2_events
@@ -22,19 +23,28 @@ namespace cs_4._2_events
         public void Move()
         {
             Random r = new Random();
-            x = r.Next(2);
-            y = r.Next(2);
+            x += r.Next(0, 2);
+            //Console.WriteLine("x = {0}", x);
+            Thread.Sleep(100);
+            y += r.Next(0, 2);
+            //Console.WriteLine("y = {0}", y);
         }
 
-        public void Run()
+        public void GoHome()
         {
-            x = x == 0 ? 0 : x-1;
-            y = y == 0 ? 0 : y-1;
+            x = x == 0 ? 0 : x - 1;
+            y = y == 0 ? 0 : y - 1;
         }
 
         public void InvokeEvent()
         {
             danger.Invoke();
+        }
+
+        public Bug(Cloud home)
+        {
+            x = y = 0;
+            danger += new DelegateDanger(home.ScaredBug);
         }
 
 

@@ -8,32 +8,62 @@ namespace cs_4._2_events
 {
     class Program
     {
-        //static private void Run()
-        //{
-           
-        //}
+        
 
         static void Main(string[] args)
         {
-            Bug b = new Bug();
+            Menu m = new Menu();
 
-            b.danger += new DelegateDanger(b.Run);
+            m.Start();
+            
+            
+            
+            
+            
+            
+            //Cloud home = new Cloud();
 
-            Console.WriteLine("Bug pos: {0}, {1}", b.x++, b.y++);
-            Console.WriteLine("Bug pos: {0}, {1}", b.x++, b.y++);
-            Console.WriteLine("Bug pos: {0}, {1}", b.x++, b.y++);
-            Console.WriteLine("Bug pos: {0}, {1}", b.x++, b.y++);
-            b.InvokeEvent();
-            b.InvokeEvent();
-            b.InvokeEvent();
-            b.InvokeEvent();
+            //home.CreateBug();
+            //home.CreateBug();
+            //home.Show();
+            //Console.WriteLine("-------------------");
+            //home.MoveBugs();
+            //home.Show();
+            //Console.WriteLine("-------------------");
+            //home.MoveBugs();
+            //home.Show();
+            //Console.WriteLine("-------------------");
+            //home.MoveBugs();
+            //home.Show();
+            //Console.WriteLine("-------------------");
+            //home.MoveBugs();
+            //home.Show();
+            //Console.WriteLine("-------------------");
+            //home.MoveBugs();
+            //home.Show();
+            //Console.WriteLine("-------------------");
 
-            //test repo git
-            // git test 2
+            //home.CreateBug();
+            //home.Show();
+            //Console.WriteLine("-------------------");
 
-            Console.WriteLine("---------------------");
-            Console.WriteLine("Bug pos: {0}, {1}", b.x++, b.y++);
-            Console.WriteLine("Bug pos: {0}, {1}", b.x++, b.y++);
+            //home.bugs[0].InvokeEvent();
+            //home.Show();
+            //Console.WriteLine("-------------------");
+            //home.bugs[0].InvokeEvent();
+            //home.Show();
+            //Console.WriteLine("-------------------");
+            //home.bugs[0].InvokeEvent();
+            //home.Show();
+            //Console.WriteLine("-------------------");
+
+
+
+
+
+
+
+
         }
     }
 }
