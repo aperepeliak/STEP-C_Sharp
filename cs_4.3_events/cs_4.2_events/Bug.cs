@@ -22,7 +22,7 @@ namespace cs_4._2_events
         {
             Random r = new Random();
             x += r.Next(0, 2);
-            Thread.Sleep(100);
+            Thread.Sleep(10);
             y += r.Next(0, 2);
         }
 
