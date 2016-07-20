@@ -8,14 +8,14 @@ namespace cs_4._2_events
 {
     class Cloud
     {
-        public int counter = 0;
+        public List<Bug> bugs;
+        public int counter = 0; // Сколько ходов действует испуг
+
         public void ScaredBug()
         {
-            //BugsGoHome();
             counter = 3;
         }
 
-        public List<Bug> bugs;
         public void CreateBug()
         {
             bugs.Add(new Bug(this));
@@ -29,6 +29,7 @@ namespace cs_4._2_events
             }
             Console.WriteLine("Жуки шевелятся");
         }
+
         private void BugsGoHome()
         {
             for (int i = 0; i < bugs.Count; i++)
@@ -37,6 +38,7 @@ namespace cs_4._2_events
             }
             Console.WriteLine("Жуки в страхе бегут домой");
         }
+
         public void Show()
         {
             for (int i = 0; i < bugs.Count; i++)
@@ -45,9 +47,9 @@ namespace cs_4._2_events
             }
         }
 
-        public void NextStep ()
+        public void NextStep()
         {
-            if (counter !=0)
+            if (counter != 0)
             {
                 BugsGoHome();
                 counter--;
@@ -58,10 +60,9 @@ namespace cs_4._2_events
             }
         }
 
-        public Cloud ()
+        public Cloud()
         {
             bugs = new List<Bug>();
         }
-
     }
 }

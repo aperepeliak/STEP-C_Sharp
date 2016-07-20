@@ -16,18 +16,14 @@ namespace cs_4._2_events
         public int x;
         public int y;
 
-        //public int X { get; set; }
-        //public int Y { get; set; }
         public string Name { get; set; }
 
         public void Move()
         {
             Random r = new Random();
             x += r.Next(0, 2);
-            //Console.WriteLine("x = {0}", x);
             Thread.Sleep(100);
             y += r.Next(0, 2);
-            //Console.WriteLine("y = {0}", y);
         }
 
         public void GoHome()
@@ -46,7 +42,5 @@ namespace cs_4._2_events
             x = y = 0;
             danger += new DelegateDanger(home.ScaredBug);
         }
-
-
     }
 }

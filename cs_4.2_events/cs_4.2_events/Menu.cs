@@ -9,10 +9,10 @@ namespace cs_4._2_events
     class Menu
     {
         Cloud home;
+
         public void Start()
         {
             bool f = true;
-
             while (f)
             {
                 Console.WriteLine("Menu: ");
@@ -23,9 +23,10 @@ namespace cs_4._2_events
                 Console.WriteLine("0. Выход");
 
                 Console.Write("Ваш выбор -> ");
-
                 string menuItem = Console.ReadLine();
-                switch (int.Parse(menuItem))
+                int key;
+                int.TryParse(menuItem, out key);
+                switch (key)
                 {
                     case 1:
                         AddBug();
@@ -52,6 +53,7 @@ namespace cs_4._2_events
                         Console.WriteLine("Нет такого пункта меню");
                         break;
                 }
+
                 //Delay
                 Console.Write("\n\n\nНажмите любую клавишу для продолжения ");
                 Console.ReadKey();
