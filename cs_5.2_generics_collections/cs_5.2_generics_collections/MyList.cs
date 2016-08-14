@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace cs_5._2_generics_collections
 {
-    class MyList<T>
+    class MyList<T> : IEnumerable, IEnumerator
     {
         T[] arr;
         private int size;
+        private int position = -1;
 
         public MyList()
         {
@@ -57,6 +59,35 @@ namespace cs_5._2_generics_collections
             }
         }
 
+        // IEnumerable Implementation
+        public IEnumerator GetEnumerator()
+        {
+            return this as IEnumerator;
+        }
 
+        // IEnumerator Implementation
+        public bool MoveNext()
+        {
+            if (position < size - 1)
+            {
+                position++;
+                return true;
+            }
+            else
+            {
+                Reset();
+                return false;
+            }
+        }
+
+        public void Reset()
+        {
+            position = -1;
+        }
+
+        public object Current
+        {
+            get { return arr[position]; }
+        }
     }
 }

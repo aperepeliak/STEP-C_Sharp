@@ -20,14 +20,13 @@ namespace cs_5._2_generics_collections
             test.Add(8);
 
             Write("My List:\t");
-            for (int i = 0; i < test.Size; i++)
+            foreach (var element in test)
             {
-                Write($"{test[i]} ");
+                Write($"{element} ");
             }
 
             Write("\nSize:\t\t");
             WriteLine($"{test.Size}");
-
         }
     }
 }
