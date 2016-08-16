@@ -56,7 +56,6 @@ namespace cs_5._3_streams
                     WriteLine("Error! Invalid input");
                     Write($"\nPress any key to retry ...");
                     ReadKey();
-
                 }
                 Clear();
             }
@@ -72,9 +71,9 @@ namespace cs_5._3_streams
                 WriteLine($"Current directory: {mySearch.Directory.FullName}");
                 WriteLine("------");
                 WriteLine($"1. Change directory");
-                WriteLine($"2. Search by Name...");
-                WriteLine($"3. Search by Size...");
-                WriteLine($"4. Search by Date...");
+                WriteLine($"2. Search by Name");
+                WriteLine($"3. Search by Size");
+                WriteLine($"4. Search by Date");
                 WriteLine($"0. Back to main menu");
                 WriteLine("------");
                 Write($"Your choice -> ");
@@ -151,13 +150,6 @@ namespace cs_5._3_streams
 
                                     Write($"\tYour choice -> ");
                                 }
-                                
-
-                                //WriteLine($"\n\t>F< -- List files");
-                                //WriteLine($"\t>D< -- List directories");
-                                //WriteLine($"\t>Q< -- Exit");
-
-                                //Write($"\tYour choice -> ");
 
                                 try
                                 {
@@ -254,8 +246,6 @@ namespace cs_5._3_streams
             int yPos = 15;
             int dirNamePos = 4;
             int dirFullName = 30;
-            //int dirCreationDatePos = 70;
-            //int dirLastAccessTime = 95;
 
             int dirNameMaxLength = 20;
             int dirFullNameMaxLength = 80;
@@ -266,10 +256,6 @@ namespace cs_5._3_streams
             Write($"| Directory Name");
             SetCursorPosition(dirFullName, yPos);
             Write($"| Full Name");
-            //SetCursorPosition(dirCreationDatePos, yPos);
-            //Write($"| Creation Date");
-            //SetCursorPosition(dirLastAccessTime, yPos);
-            //Write($"| Last Access Time");
             yPos++;
             SetCursorPosition(0, yPos);
             Write(new string('-', 113));
@@ -283,10 +269,6 @@ namespace cs_5._3_streams
                 Write($"| {dir.Name.Truncate(dirNameMaxLength)}");
                 SetCursorPosition(dirFullName, yPos);
                 Write($"| {dir.FullName.Truncate(dirFullNameMaxLength)}");
-                //SetCursorPosition(dirCreationDatePos, yPos);
-                //Write($"| {dir.CreationTime}");
-                //SetCursorPosition(dirLastAccessTime, yPos);
-                //Write($"| {dir.LastAccessTime}");
                 yPos++;
             }
             Write("\n\nPress any key to return...");
