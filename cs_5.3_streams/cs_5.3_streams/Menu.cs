@@ -36,7 +36,7 @@ namespace cs_5._3_streams
                     switch (key)
                     {
                         case 1:
-                            Submenu();
+                            Submenu_SearchByName();
                             break;
                         case 0:
                             WriteLine("Good Bye!");
@@ -61,7 +61,7 @@ namespace cs_5._3_streams
             }
         }
 
-        void Submenu()
+        void Submenu_SearchByName()
         {
             bool f = true;
             while (f)
@@ -110,20 +110,82 @@ namespace cs_5._3_streams
                             }
                             break;
                         case 2:
+                            
                             Clear();
                             WriteLine($"MENU\n | -- Search Files and Folders\n\t | -- Search by Name\n");
                             WriteLine($"Current directory: { mySearch.Directory.FullName}");
+                            Write("-----\n");
                             Write($"Enter name of file or directory to search -> ");
                             string toSearch = ReadLine();
                             FileInfo[] files = mySearch.SearchFiles(toSearch);
                             DirectoryInfo[] dirs = mySearch.SearchDirs(toSearch);
-                            WriteLine($"{files.Length} files found");
-                            WriteLine($"{dirs.Length} directories found");
+                            WriteLine($"{files.Length} file{(files.Length == 1 ? "" : "s")} found");
+                            WriteLine($"{dirs.Length} director{(dirs.Length == 1 ? "y" : "ies")} found");
 
+                            bool subFlag = true;
+                            bool firstDisplay = true;
 
-                            // Delay
-                            ReadKey();
-                            Clear();
+                            do
+                            {
+                                if (firstDisplay)
+                                {
+                                    WriteLine($"\n\t>F< -- List files");
+                                    WriteLine($"\t>D< -- List directories");
+                                    WriteLine($"\t>Q< -- Exit");
+
+                                    Write($"\tYour choice -> ");
+                                    firstDisplay = false;
+                                } else
+                                {
+                                    WriteLine($"MENU\n | -- Search Files and Folders\n\t | -- Search by Name\n");
+                                    WriteLine($"Current directory: { mySearch.Directory.FullName}");
+                                    Write("-----\n");
+                                    WriteLine($"{files.Length} file{(files.Length == 1 ? "" : "s")} found");
+                                    WriteLine($"{dirs.Length} director{(dirs.Length == 1 ? "y" : "ies")} found");
+                                    Write("-----\n");
+                                    WriteLine($"\n\t>F< -- List files");
+                                    WriteLine($"\t>D< -- List directories");
+                                    WriteLine($"\t>Q< -- Exit");
+
+                                    Write($"\tYour choice -> ");
+                                }
+                                
+
+                                //WriteLine($"\n\t>F< -- List files");
+                                //WriteLine($"\t>D< -- List directories");
+                                //WriteLine($"\t>Q< -- Exit");
+
+                                //Write($"\tYour choice -> ");
+
+                                try
+                                {
+                                    switch(ToChar(ReadLine()))
+                                    {
+                                        case 'f':
+                                        case 'F':
+                                            ShowFiles(files);
+                                            break;
+
+                                        case 'd':
+                                        case 'D':
+                                            ShowDirs(dirs);
+                                            break;
+
+                                        case 'q':
+                                        case 'Q':
+                                            subFlag = false;
+                                            break;
+                                    }
+                                }
+                                catch
+                                {
+                                    Clear();
+                                    WriteLine("Error! Invalid input");
+                                    Write($"\nPress any key to retry ...");
+                                    ReadKey();
+                                }
+                            } while (subFlag);
+
                             break;
                     }
                 }
@@ -136,5 +198,70 @@ namespace cs_5._3_streams
                 }
             }
         }
+
+        public void ShowFiles(FileInfo[] files)
+        {
+            int i = 1;
+            int yPos = 15;
+            int fileNamePos = 4;
+            int fileSizePos = 60;
+            int fileCreattionDatePos = 75;
+            int fileExtensionPos = 100;
+
+            int fileNameMaxLength = 50;
+
+            SetCursorPosition(0, yPos);
+            Write($"№");
+            SetCursorPosition(fileNamePos, yPos);
+            Write($"| File Name");
+            SetCursorPosition(fileSizePos, yPos);
+            Write($"| Size, KB");
+            SetCursorPosition(fileCreattionDatePos, yPos);
+            Write($"| Creation Date");
+            SetCursorPosition(fileExtensionPos, yPos);
+            Write($"| Extension");
+            yPos++;
+            SetCursorPosition(0, yPos);
+            Write(new string('-', 113));
+            yPos++;
+
+            foreach (FileInfo file in files)
+            {
+                SetCursorPosition(0, yPos);
+                Write($"{i++}");
+                SetCursorPosition(fileNamePos, yPos);
+                Write($"| {file.Name.Truncate(fileNameMaxLength)}");
+                SetCursorPosition(fileSizePos, yPos);
+                Write($"| {(file.Length/1000)}");
+                SetCursorPosition(fileCreattionDatePos, yPos);
+                Write($"| {file.CreationTime}");
+                SetCursorPosition(fileExtensionPos, yPos);
+                Write($"| {file.Extension}");
+                yPos++;
+
+            }
+
+            Write("\n\nPress any key to return");
+            // Delay
+            ReadKey();
+            Clear();
+        }
+
+        public void ShowDirs(DirectoryInfo[] dirs)
+        {
+
+        }
+
+        
     }
+
+    static class StringTruncate
+    {
+        public static string Truncate(this string str, int maxLength)
+        {
+            return str.Substring(0, Math.Min(str.Length, maxLength));
+        }
+    }
+
+    
 }
