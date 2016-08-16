@@ -28,6 +28,34 @@ namespace cs_5._3_streams
             return Directory.GetFiles("*" + toSearch + "*", SearchOption.AllDirectories);
         }
 
+        public FileInfo[] SearchBySize(int SizeKB, string option)
+        {
+            FileInfo[] tmp = Directory.GetFiles("*", SearchOption.AllDirectories);
+            List<FileInfo> files = new List<FileInfo>();
+            if (option == "L")
+            {
+                foreach (var file in tmp)
+                {
+                    if ((file.Length / 1000) <= SizeKB)
+                    {
+                        files.Add(file);
+                    }
+                }
+                return files.ToArray();
+            } else
+            {
+                foreach (var file in tmp)
+                {
+                    if ((file.Length / 1000) >= SizeKB)
+                    {
+                        files.Add(file);
+                    }
+                }
+                return files.ToArray();
+            }
+            
+        }
+
         public DirectoryInfo[] SearchDirs(string toSearch)
         {
             return Directory.GetDirectories("*" + toSearch + "*", SearchOption.AllDirectories);

@@ -56,7 +56,6 @@ namespace cs_5._3_streams
                             WriteLine("No such option");
                             break;
                     }
-
                 }
                 catch
                 {
@@ -68,8 +67,6 @@ namespace cs_5._3_streams
                 Clear();
             }
         }
-
-        
 
         void Submenu_SearchFilesAndFolders()
         {
@@ -220,7 +217,23 @@ namespace cs_5._3_streams
 
         public void Submenu_SearchBySize()
         {
+            Clear();
+            WriteLine($"MENU\n | -- Search Files and Folders\n\t | -- Search by Size\n");
+            WriteLine($"Current directory: { mySearch.Directory.FullName}");
+            Write("-----\n");
+            Write($"Less than ('L' - default) or more than ('M')? -> ");
+            string option = ReadLine();
+            Write($"Enter size in KB -> ");
+            int toSearch = ToInt32(ReadLine());
+            FileInfo[] files = mySearch.SearchBySize(toSearch, (option == "M"? "M" : "L"));
+            WriteLine($"{files.Length} file{(files.Length == 1 ? "" : "s")} found");
 
+            ShowFiles(files);
+
+            //// Delay
+            //Write($"\n\nPress any key to continue ...");
+            //ReadKey();
+            //Clear();
         }
 
         public void Submenu_SearchByDate()
