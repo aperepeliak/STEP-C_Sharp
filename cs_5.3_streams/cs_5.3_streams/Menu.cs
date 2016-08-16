@@ -39,6 +39,9 @@ namespace cs_5._3_streams
                         case 1:
                             Submenu_SearchByName();
                             break;
+                        case 2:
+                            Submenu_SearchBySize();
+                            break;
                         case 0:
                             WriteLine("Good Bye!");
                             f = false;
@@ -191,6 +194,11 @@ namespace cs_5._3_streams
                     ReadKey();
                 }
             }
+        }
+
+        public void Submenu_SearchBySize()
+        {
+
         }
 
         public void ShowFiles(FileInfo[] files)
