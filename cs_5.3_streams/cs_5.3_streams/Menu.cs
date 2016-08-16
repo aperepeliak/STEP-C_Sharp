@@ -28,6 +28,8 @@ namespace cs_5._3_streams
             {
                 WriteLine("MENU: ");
                 WriteLine("1. Search files and folders");
+                WriteLine("2. Search txt files by content");
+                WriteLine("3. Remove html tags");
                 WriteLine("0. Exit App");
                 WriteLine("-----");
                 Write("Your choice -> ");
@@ -37,10 +39,13 @@ namespace cs_5._3_streams
                     switch (key)
                     {
                         case 1:
-                            Submenu_SearchByName();
+                            Submenu_SearchFilesAndFolders();
                             break;
                         case 2:
-                            Submenu_SearchBySize();
+                            Submenu_SearchByContent();
+                            break;
+                        case 3:
+                            Submenu_RemoveHTMLTags();
                             break;
                         case 0:
                             WriteLine("Good Bye!");
@@ -64,7 +69,9 @@ namespace cs_5._3_streams
             }
         }
 
-        void Submenu_SearchByName()
+        
+
+        void Submenu_SearchFilesAndFolders()
         {
             bool f = true;
             while (f)
@@ -80,7 +87,6 @@ namespace cs_5._3_streams
                 WriteLine($"0. Back to main menu");
                 WriteLine("------");
                 Write($"Your choice -> ");
-                bool correctPath = false;
 
                 try
                 {
@@ -90,99 +96,16 @@ namespace cs_5._3_streams
                             f = false;
                             break;
                         case 1:
-                            while (!correctPath)
-                            {
-                                Clear();
-                                WriteLine($"MENU\n | -- Search Files and Folders\n\t | -- Change directory\n");
-                                Write($"Enter new path -> ");
-                                SendKeys.SendWait($"{mySearch.Directory.FullName}");
-                                string str = ReadLine();
-                                if (mySearch.SetNewPath(str))
-                                {
-                                    Write($"New path: { mySearch.Directory.FullName}");
-                                    correctPath = true;
-                                }
-                                else
-                                {
-                                    Write($"New path: path not found");
-                                    correctPath = false;
-                                }
-                                // Delay
-                                Write($"\n\nPress any key to continue ...");
-                                ReadKey();
-                                Clear();
-                            }
+                            Submenu_ChangeActiveDirectory();
                             break;
                         case 2:
-                            
-                            Clear();
-                            WriteLine($"MENU\n | -- Search Files and Folders\n\t | -- Search by Name\n");
-                            WriteLine($"Current directory: { mySearch.Directory.FullName}");
-                            Write("-----\n");
-                            Write($"Enter name of file or directory to search -> ");
-                            string toSearch = ReadLine();
-                            FileInfo[] files = mySearch.SearchFiles(toSearch);
-                            DirectoryInfo[] dirs = mySearch.SearchDirs(toSearch);
-                            WriteLine($"{files.Length} file{(files.Length == 1 ? "" : "s")} found");
-                            WriteLine($"{dirs.Length} director{(dirs.Length == 1 ? "y" : "ies")} found");
-
-                            bool subFlag = true;
-                            bool firstDisplay = true;
-
-                            do
-                            {
-                                if (firstDisplay)
-                                {
-                                    WriteLine($"\n\t>F< -- List files");
-                                    WriteLine($"\t>D< -- List directories");
-                                    WriteLine($"\t>Q< -- Exit");
-
-                                    Write($"\tYour choice -> ");
-                                    firstDisplay = false;
-                                } else
-                                {
-                                    WriteLine($"MENU\n | -- Search Files and Folders\n\t | -- Search by Name\n");
-                                    WriteLine($"Current directory: { mySearch.Directory.FullName}");
-                                    Write("-----\n");
-                                    WriteLine($"{files.Length} file{(files.Length == 1 ? "" : "s")} found");
-                                    WriteLine($"{dirs.Length} director{(dirs.Length == 1 ? "y" : "ies")} found");
-                                    Write("-----\n");
-                                    WriteLine($"\n\t>F< -- List files");
-                                    WriteLine($"\t>D< -- List directories");
-                                    WriteLine($"\t>Q< -- Exit");
-
-                                    Write($"\tYour choice -> ");
-                                }
-
-                                try
-                                {
-                                    switch(ToChar(ReadLine()))
-                                    {
-                                        case 'f':
-                                        case 'F':
-                                            ShowFiles(files);
-                                            break;
-
-                                        case 'd':
-                                        case 'D':
-                                            ShowDirs(dirs);
-                                            break;
-
-                                        case 'q':
-                                        case 'Q':
-                                            subFlag = false;
-                                            break;
-                                    }
-                                }
-                                catch
-                                {
-                                    Clear();
-                                    WriteLine("Error! Invalid input");
-                                    Write($"\nPress any key to retry ...");
-                                    ReadKey();
-                                }
-                            } while (subFlag);
-
+                            Submenu_SearchByName();
+                            break;
+                        case 3:
+                            Submenu_SearchBySize();
+                            break;
+                        case 4:
+                            Submenu_SearchByDate();
                             break;
                     }
                 }
@@ -196,7 +119,111 @@ namespace cs_5._3_streams
             }
         }
 
+        public void Submenu_ChangeActiveDirectory()
+        {
+            bool correctPath = false;
+            while (!correctPath)
+            {
+                Clear();
+                WriteLine($"MENU\n | -- Search Files and Folders\n\t | -- Change directory\n");
+                Write($"Enter new path -> ");
+                SendKeys.SendWait($"{mySearch.Directory.FullName}");
+                string str = ReadLine();
+                if (mySearch.SetNewPath(str))
+                {
+                    Write($"New path: { mySearch.Directory.FullName}");
+                    correctPath = true;
+                }
+                else
+                {
+                    Write($"New path: path not found");
+                    correctPath = false;
+                }
+                // Delay
+                Write($"\n\nPress any key to continue ...");
+                ReadKey();
+                Clear();
+            }
+        }
+
+        public void Submenu_SearchByName()
+        {
+            Clear();
+            WriteLine($"MENU\n | -- Search Files and Folders\n\t | -- Search by Name\n");
+            WriteLine($"Current directory: { mySearch.Directory.FullName}");
+            Write("-----\n");
+            Write($"Enter name of file or directory to search -> ");
+            string toSearch = ReadLine();
+            FileInfo[] files = mySearch.SearchFiles(toSearch);
+            DirectoryInfo[] dirs = mySearch.SearchDirs(toSearch);
+            WriteLine($"{files.Length} file{(files.Length == 1 ? "" : "s")} found");
+            WriteLine($"{dirs.Length} director{(dirs.Length == 1 ? "y" : "ies")} found");
+
+            bool subFlag = true;
+            bool firstDisplay = true;
+
+            do
+            {
+                if (firstDisplay)
+                {
+                    WriteLine($"\n\t>F< -- List files");
+                    WriteLine($"\t>D< -- List directories");
+                    WriteLine($"\t>Q< -- Exit");
+
+                    Write($"\tYour choice -> ");
+                    firstDisplay = false;
+                }
+                else
+                {
+                    WriteLine($"MENU\n | -- Search Files and Folders\n\t | -- Search by Name\n");
+                    WriteLine($"Current directory: { mySearch.Directory.FullName}");
+                    Write("-----\n");
+                    WriteLine($"{files.Length} file{(files.Length == 1 ? "" : "s")} found");
+                    WriteLine($"{dirs.Length} director{(dirs.Length == 1 ? "y" : "ies")} found");
+                    Write("-----\n");
+                    WriteLine($"\n\t>F< -- List files");
+                    WriteLine($"\t>D< -- List directories");
+                    WriteLine($"\t>Q< -- Exit");
+
+                    Write($"\tYour choice -> ");
+                }
+
+                try
+                {
+                    switch (ToChar(ReadLine()))
+                    {
+                        case 'f':
+                        case 'F':
+                            ShowFiles(files);
+                            break;
+
+                        case 'd':
+                        case 'D':
+                            ShowDirs(dirs);
+                            break;
+
+                        case 'q':
+                        case 'Q':
+                            subFlag = false;
+                            break;
+                    }
+                }
+                catch
+                {
+                    Clear();
+                    WriteLine("Error! Invalid input");
+                    Write($"\nPress any key to retry ...");
+                    ReadKey();
+                }
+            } while (subFlag);
+        }
+
         public void Submenu_SearchBySize()
+        {
+
+        }
+
+        public void Submenu_SearchByDate()
         {
 
         }
@@ -234,7 +261,7 @@ namespace cs_5._3_streams
                 SetCursorPosition(fileNamePos, yPos);
                 Write($"| {file.Name.Truncate(fileNameMaxLength)}");
                 SetCursorPosition(fileSizePos, yPos);
-                Write($"| {(file.Length/1000)}");
+                Write($"| {(file.Length / 1000)}");
                 SetCursorPosition(fileCreationDatePos, yPos);
                 Write($"| {file.CreationTime}");
                 SetCursorPosition(fileExtensionPos, yPos);
@@ -285,7 +312,17 @@ namespace cs_5._3_streams
             Clear();
         }
 
-        
+        private void Submenu_RemoveHTMLTags()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Submenu_SearchByContent()
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 
     static class StringTruncate
@@ -296,5 +333,5 @@ namespace cs_5._3_streams
         }
     }
 
-    
+
 }
