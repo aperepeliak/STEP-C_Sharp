@@ -56,6 +56,34 @@ namespace cs_5._3_streams
             
         }
 
+        public FileInfo[] SearchByDate(DateTime date, string option)
+        {
+            FileInfo[] tmp = Directory.GetFiles("*", SearchOption.AllDirectories);
+            List<FileInfo> files = new List<FileInfo>();
+            if (option == "L")
+            {
+                foreach (var file in tmp)
+                {
+                    if (file.CreationTime >= date)
+                    {
+                        files.Add(file);
+                    }
+                }
+                return files.ToArray();
+            }
+            else
+            {
+                foreach (var file in tmp)
+                {
+                    if (file.CreationTime <= date)
+                    {
+                        files.Add(file);
+                    }
+                }
+                return files.ToArray();
+            }
+        }
+
         public DirectoryInfo[] SearchDirs(string toSearch)
         {
             return Directory.GetDirectories("*" + toSearch + "*", SearchOption.AllDirectories);

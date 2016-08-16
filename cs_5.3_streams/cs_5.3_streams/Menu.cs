@@ -221,7 +221,7 @@ namespace cs_5._3_streams
             WriteLine($"MENU\n | -- Search Files and Folders\n\t | -- Search by Size\n");
             WriteLine($"Current directory: { mySearch.Directory.FullName}");
             Write("-----\n");
-            Write($"Less than ('L' - default) or more than ('M')? -> ");
+            Write($"Search for files that are less than ('L' - default) or more than ('M')? -> ");
             string option = ReadLine();
             Write($"Enter size in KB -> ");
             int toSearch = ToInt32(ReadLine());
@@ -229,16 +229,22 @@ namespace cs_5._3_streams
             WriteLine($"{files.Length} file{(files.Length == 1 ? "" : "s")} found");
 
             ShowFiles(files);
-
-            //// Delay
-            //Write($"\n\nPress any key to continue ...");
-            //ReadKey();
-            //Clear();
         }
 
         public void Submenu_SearchByDate()
         {
+            Clear();
+            WriteLine($"MENU\n | -- Search Files and Folders\n\t | -- Search by Creation Date\n");
+            WriteLine($"Current directory: { mySearch.Directory.FullName}");
+            Write("-----\n");
+            Write($"Search for files that are created Earlier than ('E' - default) or Later than ('L')? -> ");
+            string option = ReadLine();
+            Write($"Enter date ('dd-mm-yy' or 'dd.mm.yy') -> ");
+            DateTime toSearch = ToDateTime(ReadLine());
+            FileInfo[] files = mySearch.SearchByDate(toSearch, (option == "L" ? "L" : "E"));
+            WriteLine($"{files.Length} file{(files.Length == 1 ? "" : "s")} found");
 
+            ShowFiles(files);
         }
 
         public void ShowFiles(FileInfo[] files)
