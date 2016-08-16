@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 using static System.Console;
 using static System.Convert;
@@ -92,6 +93,7 @@ namespace cs_5._3_streams
                                 Clear();
                                 WriteLine($"MENU\n | -- Search Files and Folders\n\t | -- Change directory\n");
                                 Write($"Enter new path -> ");
+                                SendKeys.SendWait($"{mySearch.Directory.FullName}");
                                 string str = ReadLine();
                                 if (mySearch.SetNewPath(str))
                                 {
@@ -205,7 +207,7 @@ namespace cs_5._3_streams
             int yPos = 15;
             int fileNamePos = 4;
             int fileSizePos = 60;
-            int fileCreattionDatePos = 75;
+            int fileCreationDatePos = 75;
             int fileExtensionPos = 100;
 
             int fileNameMaxLength = 50;
@@ -216,7 +218,7 @@ namespace cs_5._3_streams
             Write($"| File Name");
             SetCursorPosition(fileSizePos, yPos);
             Write($"| Size, KB");
-            SetCursorPosition(fileCreattionDatePos, yPos);
+            SetCursorPosition(fileCreationDatePos, yPos);
             Write($"| Creation Date");
             SetCursorPosition(fileExtensionPos, yPos);
             Write($"| Extension");
@@ -233,15 +235,14 @@ namespace cs_5._3_streams
                 Write($"| {file.Name.Truncate(fileNameMaxLength)}");
                 SetCursorPosition(fileSizePos, yPos);
                 Write($"| {(file.Length/1000)}");
-                SetCursorPosition(fileCreattionDatePos, yPos);
+                SetCursorPosition(fileCreationDatePos, yPos);
                 Write($"| {file.CreationTime}");
                 SetCursorPosition(fileExtensionPos, yPos);
-                Write($"| {file.Extension}");
+                Write($"| {file.Extension.Truncate(5)}");
                 yPos++;
-
             }
 
-            Write("\n\nPress any key to return");
+            Write("\n\nPress any key to return...");
             // Delay
             ReadKey();
             Clear();
@@ -249,7 +250,49 @@ namespace cs_5._3_streams
 
         public void ShowDirs(DirectoryInfo[] dirs)
         {
+            int i = 1;
+            int yPos = 15;
+            int dirNamePos = 4;
+            int dirFullName = 30;
+            //int dirCreationDatePos = 70;
+            //int dirLastAccessTime = 95;
 
+            int dirNameMaxLength = 20;
+            int dirFullNameMaxLength = 80;
+
+            SetCursorPosition(0, yPos);
+            Write($"№");
+            SetCursorPosition(dirNamePos, yPos);
+            Write($"| Directory Name");
+            SetCursorPosition(dirFullName, yPos);
+            Write($"| Full Name");
+            //SetCursorPosition(dirCreationDatePos, yPos);
+            //Write($"| Creation Date");
+            //SetCursorPosition(dirLastAccessTime, yPos);
+            //Write($"| Last Access Time");
+            yPos++;
+            SetCursorPosition(0, yPos);
+            Write(new string('-', 113));
+            yPos++;
+
+            foreach (DirectoryInfo dir in dirs)
+            {
+                SetCursorPosition(0, yPos);
+                Write($"{i++}");
+                SetCursorPosition(dirNamePos, yPos);
+                Write($"| {dir.Name.Truncate(dirNameMaxLength)}");
+                SetCursorPosition(dirFullName, yPos);
+                Write($"| {dir.FullName.Truncate(dirFullNameMaxLength)}");
+                //SetCursorPosition(dirCreationDatePos, yPos);
+                //Write($"| {dir.CreationTime}");
+                //SetCursorPosition(dirLastAccessTime, yPos);
+                //Write($"| {dir.LastAccessTime}");
+                yPos++;
+            }
+            Write("\n\nPress any key to return...");
+            // Delay
+            ReadKey();
+            Clear();
         }
 
         
