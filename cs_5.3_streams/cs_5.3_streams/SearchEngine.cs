@@ -98,6 +98,7 @@ namespace cs_5._3_streams
                     if (input.Contains(toSearch, StringComparison.OrdinalIgnoreCase))
                     {
                         files.Add(file);
+                        break;
                     }
                 }
                 reader.Close();
@@ -108,6 +109,21 @@ namespace cs_5._3_streams
         public DirectoryInfo[] SearchDirs(string toSearch)
         {
             return Directory.GetDirectories("*" + toSearch + "*", SearchOption.AllDirectories);
+        }
+
+        public bool fileIsFound(string formattedFileName)
+        {
+            var file = new FileInfo($"{Directory.FullName}\\{formattedFileName}");
+            if (file.Exists)
+                return true;
+            else
+                return false;
+        }
+
+        public void DeleteFile(string formattedFileName)
+        {
+            var file = new FileInfo($"{Directory.FullName}\\{formattedFileName}");
+            file.Delete();
         }
 
         public SearchEngine()

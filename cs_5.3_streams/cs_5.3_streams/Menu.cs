@@ -337,11 +337,12 @@ namespace cs_5._3_streams
             while (f)
             {
                 Clear();
-                WriteLine($"MENU\n | -- Search text files by content\n");
+                WriteLine($"MENU\n | -- Search  text file by content\n");
                 WriteLine($"Current directory: {mySearch.Directory.FullName}");
                 WriteLine("------");
                 WriteLine($"1. Change directory");
                 WriteLine($"2. Start search...");
+                WriteLine($"3. Files manipulation");
                 WriteLine($"0. Back to main menu");
                 WriteLine("------");
                 Write($"Your choice -> ");
@@ -353,18 +354,24 @@ namespace cs_5._3_streams
                         case 0:
                             f = false;
                             break;
+
                         case 1:
-                            Submenu_ChangeActiveDirectory("Search by content");
+                            Submenu_ChangeActiveDirectory("Search text file by content");
                             break;
+
                         case 2:
                             Submenu_SearchContent();
                             break;
+
+                        case 3:
+                            Submenu_FilesManip();
+                            break;
                     }
                 }
-                catch (Exception e)
+                catch
                 {
                     Clear();
-                    WriteLine(e.Message);
+                    WriteLine("Error! Invalid input");
                     Write($"\nPress any key to retry ...");
                     ReadKey();
                 }
@@ -386,7 +393,95 @@ namespace cs_5._3_streams
 
         }
 
-        private void Submenu_RemoveHTMLTags()
+        public void Submenu_FilesManip()
+        {
+            bool f = true;
+            while (f)
+            {
+                Clear();
+                WriteLine($"MENU\n | -- Search by content\n\t | -- Files manipilation\n");
+                WriteLine($"Current directory: { mySearch.Directory.FullName}");
+                Write("-----\n");
+                WriteLine($"1. Delete file");
+                WriteLine($"2. Copy to...");
+                WriteLine($"3. Move to...");
+                WriteLine($"0. Back to previous menu");
+                WriteLine("------");
+                Write($"Your choice -> ");
+                try
+                {
+                    switch (ToInt32(ReadLine()))
+                    {
+                        case 0:
+                            f = false;
+                            break;
+
+                        case 1:
+                            Submenu_Delete();
+                            break;
+
+                        case 2:
+                            Submenu_CopyTo();
+                            break;
+
+                        case 3:
+                            Submenu_MoveTo();
+                            break;
+                    }
+                }
+                catch
+                {
+                    Clear();
+                    WriteLine("Error! Invalid input");
+                    Write($"\nPress any key to retry ...");
+                    ReadKey();
+                }
+            }
+        }
+
+        public void Submenu_Delete()
+        {
+            Clear();
+            WriteLine($"MENU\n | -- Search by content\n\t | -- Files manipilation\n\t | -- Delete\n");
+            Write($"Enter text file name to delete -> {mySearch.Directory.FullName}\\");
+            string toDelete = ReadLine();
+            string formattedFileName = (toDelete.Contains('.') ? toDelete : toDelete + ".txt");
+            if (mySearch.fileIsFound(formattedFileName))
+            {
+                Write($"Are you sure you want to delete {formattedFileName} (y/n)? -> ");
+                string clarify = ReadLine();
+                if (clarify == "y" || clarify == "Y")
+                {
+                    mySearch.DeleteFile(formattedFileName);
+                    WriteLine($"File {formattedFileName} was succesfully deleted.");
+                }
+                else
+                {
+                    WriteLine($"Abort delete.");
+                }
+            }
+            else
+            {
+                WriteLine($"File {formattedFileName} not found.");
+            }
+
+            Write("\n\nPress any key to return...");
+            // Delay
+            ReadKey();
+            Clear();
+        }
+
+        public void Submenu_CopyTo()
+        {
+
+        }
+
+        public void Submenu_MoveTo()
+        {
+
+        }
+
+        public void Submenu_RemoveHTMLTags()
         {
             throw new NotImplementedException();
         }
