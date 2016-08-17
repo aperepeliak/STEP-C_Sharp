@@ -367,9 +367,7 @@ namespace cs_5._3_streams
             string toSearch = ReadLine();
             FileInfo[] files = mySearch.SearchByContent(toSearch);
             WriteLine($"{files.Length} file{(files.Length == 1 ? "" : "s")} found");
-
             ShowFiles(files);
-
         }
 
         public void Submenu_FilesManip()
@@ -381,6 +379,7 @@ namespace cs_5._3_streams
                 WriteLine($"1. Delete file");
                 WriteLine($"2. Copy to...");
                 WriteLine($"3. Move to...");
+                WriteLine($"4. Edit");
                 WriteLine($"0. Back to previous menu");
                 WriteLine("------");
                 Write($"Your choice -> ");
@@ -402,6 +401,9 @@ namespace cs_5._3_streams
 
                         case 3:
                             Submenu_MoveTo();
+                            break;
+                        case 4:
+                            Submenu_Edit();
                             break;
                     }
                 }
@@ -446,7 +448,7 @@ namespace cs_5._3_streams
             ReadKey();
             Clear();
         }
-
+        
         public void Submenu_CopyTo()
         {
             Header("Search text files by content", false, "Files Manipulation", "Copy to ...");
@@ -474,7 +476,55 @@ namespace cs_5._3_streams
 
         public void Submenu_MoveTo()
         {
+            Header("Search text files by content", false, "Files Manipulation", "Move to ...");
+            Write($"Enter text file name to move -> {mySearch.CurrentDirectory.FullName}\\");
+            string toMove = ReadLine();
 
+            string formattedFileName = (toMove.Contains('.') ? toMove : toMove + ".txt");
+            if (mySearch.fileIsFound(formattedFileName))
+            {
+                Write($"\nEnter destination path -> ");
+                SendKeys.SendWait($"{mySearch.CurrentDirectory.FullName}");
+                string destPath = ReadLine();
+                mySearch.CopyFile(mySearch.CurrentDirectory.FullName, destPath, formattedFileName);
+                mySearch.DeleteFile(formattedFileName);
+                WriteLine($"File {formattedFileName} was succesfully moved to {destPath}");
+            }
+            else
+            {
+                WriteLine($"File {formattedFileName} is not found.");
+            }
+            Write("\n\nPress any key to return...");
+            // Delay
+            ReadKey();
+            Clear();
+
+        }
+
+        void Submenu_Edit()
+        {
+            Header("Search text files by content", false, "Files Manipulation", "Edit");
+            Write($"Enter text file name to edit -> {mySearch.CurrentDirectory.FullName}\\");
+            string toEdit = ReadLine();
+
+            string formattedFileName = (toEdit.Contains('.') ? toEdit : toEdit + ".txt");
+            if (mySearch.fileIsFound(formattedFileName))
+            {
+                Write($"Enter string you want to change -> ");
+                string TextToChange = ReadLine();
+                Write($"Enter new string you want to place instead -> ");
+                string TextToAdd = ReadLine();
+                mySearch.EditFile(formattedFileName, TextToChange, TextToAdd);
+                WriteLine($"File {formattedFileName} was changed and saved.");
+            }
+            else
+            {
+                WriteLine($"File {formattedFileName} is not found.");
+            }
+            Write("\n\nPress any key to return...");
+            // Delay
+            ReadKey();
+            Clear();
         }
 
         public void Submenu_RemoveHTMLTags()

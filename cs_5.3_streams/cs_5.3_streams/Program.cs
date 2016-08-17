@@ -14,8 +14,8 @@ namespace cs_5._3_streams
     {
         static void Main(string[] args)
         {
-            Menu test = new Menu();
-            test.Start();
+            Menu searchConsoleApp = new Menu();
+            searchConsoleApp.Start();
         }
     }
 }

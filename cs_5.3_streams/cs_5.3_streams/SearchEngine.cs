@@ -91,7 +91,7 @@ namespace cs_5._3_streams
             List<FileInfo> files = new List<FileInfo>();
             foreach (var file in tmp)
             {
-                StreamReader reader = File.OpenText(CurrentDirectory.ToString() + "\\" + file.ToString());
+                StreamReader reader = File.OpenText(file.FullName.ToString());
                 string input;
                 while ((input = reader.ReadLine()) != null)
                 {
@@ -120,9 +120,9 @@ namespace cs_5._3_streams
                 return false;
         }
 
-        public void DeleteFile(string formattedFileName)
+        public void DeleteFile(string fileName)
         {
-            var file = new FileInfo($"{CurrentDirectory.FullName}\\{formattedFileName}");
+            var file = new FileInfo($"{CurrentDirectory.FullName}\\{fileName}");
             file.Delete();
         }
 
@@ -135,6 +135,14 @@ namespace cs_5._3_streams
                 Directory.CreateDirectory(dest);
             }
             File.Copy(sourceFile, destFile, true);
+        }
+
+        public void EditFile(string fileName, string oldValue, string newValue)
+        {
+            var file = new FileInfo($"{CurrentDirectory.FullName}\\{fileName}");
+            string text = File.ReadAllText(file.FullName.ToString());
+            text = text.Replace(oldValue, newValue);
+            File.WriteAllText(file.FullName.ToString(), text);
         }
 
         public SearchEngine()
