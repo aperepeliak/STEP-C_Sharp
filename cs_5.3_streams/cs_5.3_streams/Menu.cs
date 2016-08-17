@@ -113,7 +113,7 @@ namespace cs_5._3_streams
             }
         }
 
-        public void Submenu_ChangeActiveDirectory()
+        void Submenu_ChangeActiveDirectory()
         {
             bool correctPath = false;
             while (!correctPath)
@@ -139,7 +139,7 @@ namespace cs_5._3_streams
             }
         }
 
-        public void Submenu_SearchByName()
+        void Submenu_SearchByName()
         {
             Header("Search Files and Folders", true, "Search by Name");
             Write($"Enter name of file or directory to search -> ");
@@ -206,7 +206,7 @@ namespace cs_5._3_streams
             } while (subFlag);
         }
 
-        public void Submenu_SearchBySize()
+        void Submenu_SearchBySize()
         {
             Header("Search Files and Folders", true, "Search by Size");
             Write($"Search for files that are less than ('L' - default) or more than ('M')? -> ");
@@ -219,7 +219,7 @@ namespace cs_5._3_streams
             ShowFiles(files);
         }
 
-        public void Submenu_SearchByDate()
+        void Submenu_SearchByDate()
         {
             Header("Search Files and Folders", true, "Search by Creation Date");
             Write($"Search for files that are created Earlier than ('E' - default) or Later than ('L')? -> ");
@@ -232,7 +232,7 @@ namespace cs_5._3_streams
             ShowFiles(files);
         }
 
-        public void ShowFiles(FileInfo[] files)
+        void ShowFiles(FileInfo[] files)
         {
             int i = 1;
             int yPos = 15;
@@ -279,7 +279,7 @@ namespace cs_5._3_streams
             Clear();
         }
 
-        public void ShowDirs(DirectoryInfo[] dirs)
+        void ShowDirs(DirectoryInfo[] dirs)
         {
             int i = 1;
             int yPos = 15;
@@ -316,7 +316,7 @@ namespace cs_5._3_streams
             Clear();
         }
 
-        private void Submenu_SearchByContent()
+        void Submenu_SearchByContent()
         {
             bool f = true;
             while (f)
@@ -360,7 +360,7 @@ namespace cs_5._3_streams
             }
         }
 
-        public void Submenu_SearchContent()
+        void Submenu_SearchContent()
         {
             Header("Search text files by content", true, "Start search...");
             Write($"Enter content to search -> ");
@@ -370,7 +370,7 @@ namespace cs_5._3_streams
             ShowFiles(files);
         }
 
-        public void Submenu_FilesManip()
+        void Submenu_FilesManip()
         {
             bool f = true;
             while (f)
@@ -417,7 +417,7 @@ namespace cs_5._3_streams
             }
         }
 
-        public void Submenu_Delete()
+        void Submenu_Delete()
         {
             Header("Search text files by content", false, "Files Manipulation", "Delete");
             Write($"Enter text file name to delete -> {mySearch.CurrentDirectory.FullName}\\");
@@ -449,7 +449,7 @@ namespace cs_5._3_streams
             Clear();
         }
         
-        public void Submenu_CopyTo()
+        void Submenu_CopyTo()
         {
             Header("Search text files by content", false, "Files Manipulation", "Copy to ...");
             Write($"Enter text file name to copy -> {mySearch.CurrentDirectory.FullName}\\");
@@ -474,7 +474,7 @@ namespace cs_5._3_streams
             Clear();
         }
 
-        public void Submenu_MoveTo()
+        void Submenu_MoveTo()
         {
             Header("Search text files by content", false, "Files Manipulation", "Move to ...");
             Write($"Enter text file name to move -> {mySearch.CurrentDirectory.FullName}\\");
