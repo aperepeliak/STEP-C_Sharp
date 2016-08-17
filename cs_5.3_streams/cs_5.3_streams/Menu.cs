@@ -26,7 +26,7 @@ namespace cs_5._3_streams
             bool f = true;
             while (f)
             {
-                WriteLine("MENU: ");
+                WriteLine("MENU: \n\n");
                 WriteLine("1. Search files and folders");
                 WriteLine("2. Search txt files by content");
                 WriteLine("3. Remove html tags");
@@ -73,10 +73,7 @@ namespace cs_5._3_streams
             bool f = true;
             while (f)
             {
-                Clear();
-                WriteLine($"MENU\n | -- Search Files and Folders\n");
-                WriteLine($"Current directory: {mySearch.Directory.FullName}");
-                WriteLine("------");
+                Header("Search Files and Folders", true);
                 WriteLine($"1. Change directory");
                 WriteLine($"2. Search by Name");
                 WriteLine($"3. Search by Size");
@@ -93,7 +90,7 @@ namespace cs_5._3_streams
                             f = false;
                             break;
                         case 1:
-                            Submenu_ChangeActiveDirectory("Search Files and Folders");
+                            Submenu_ChangeActiveDirectory();
                             break;
                         case 2:
                             Submenu_SearchByName();
@@ -116,13 +113,12 @@ namespace cs_5._3_streams
             }
         }
 
-        public void Submenu_ChangeActiveDirectory(string menuItem)
+        public void Submenu_ChangeActiveDirectory()
         {
             bool correctPath = false;
             while (!correctPath)
             {
-                Clear();
-                WriteLine($"MENU\n | -- {menuItem}\n\t | -- Change directory\n");
+                Header("Search Files and Folders", false, "Change directory");
                 Write($"Enter new path -> ");
                 SendKeys.SendWait($"{mySearch.Directory.FullName}");
                 string str = ReadLine();
@@ -145,10 +141,7 @@ namespace cs_5._3_streams
 
         public void Submenu_SearchByName()
         {
-            Clear();
-            WriteLine($"MENU\n | -- Search Files and Folders\n\t | -- Search by Name\n");
-            WriteLine($"Current directory: { mySearch.Directory.FullName}");
-            Write("-----\n");
+            Header("Search Files and Folders", true, "Search by Name");
             Write($"Enter name of file or directory to search -> ");
             string toSearch = ReadLine();
             FileInfo[] files = mySearch.SearchFiles(toSearch);
@@ -172,9 +165,7 @@ namespace cs_5._3_streams
                 }
                 else
                 {
-                    WriteLine($"MENU\n | -- Search Files and Folders\n\t | -- Search by Name\n");
-                    WriteLine($"Current directory: { mySearch.Directory.FullName}");
-                    Write("-----\n");
+                    Header("Search Files and Folders", true, "Search by Name");
                     WriteLine($"{files.Length} file{(files.Length == 1 ? "" : "s")} found");
                     WriteLine($"{dirs.Length} director{(dirs.Length == 1 ? "y" : "ies")} found");
                     Write("-----\n");
@@ -217,10 +208,7 @@ namespace cs_5._3_streams
 
         public void Submenu_SearchBySize()
         {
-            Clear();
-            WriteLine($"MENU\n | -- Search Files and Folders\n\t | -- Search by Size\n");
-            WriteLine($"Current directory: { mySearch.Directory.FullName}");
-            Write("-----\n");
+            Header("Search Files and Folders", true, "Search by Size");
             Write($"Search for files that are less than ('L' - default) or more than ('M')? -> ");
             string option = ReadLine();
             Write($"Enter size in KB -> ");
@@ -233,10 +221,7 @@ namespace cs_5._3_streams
 
         public void Submenu_SearchByDate()
         {
-            Clear();
-            WriteLine($"MENU\n | -- Search Files and Folders\n\t | -- Search by Creation Date\n");
-            WriteLine($"Current directory: { mySearch.Directory.FullName}");
-            Write("-----\n");
+            Header("Search Files and Folders", true, "Search by Creation Date");
             Write($"Search for files that are created Earlier than ('E' - default) or Later than ('L')? -> ");
             string option = ReadLine();
             Write($"Enter date ('dd-mm-yyyy' or 'dd.mm.yyyy') -> ");
@@ -336,10 +321,7 @@ namespace cs_5._3_streams
             bool f = true;
             while (f)
             {
-                Clear();
-                WriteLine($"MENU\n | -- Search  text file by content\n");
-                WriteLine($"Current directory: {mySearch.Directory.FullName}");
-                WriteLine("------");
+                Header("Search text files by content", true);
                 WriteLine($"1. Change directory");
                 WriteLine($"2. Start search...");
                 WriteLine($"3. Files manipulation");
@@ -356,7 +338,7 @@ namespace cs_5._3_streams
                             break;
 
                         case 1:
-                            Submenu_ChangeActiveDirectory("Search text file by content");
+                            Submenu_ChangeActiveDirectory();
                             break;
 
                         case 2:
@@ -380,10 +362,7 @@ namespace cs_5._3_streams
 
         public void Submenu_SearchContent()
         {
-            Clear();
-            WriteLine($"MENU\n | -- Search by content\n\t | -- Start search...\n");
-            WriteLine($"Current directory: { mySearch.Directory.FullName}");
-            Write("-----\n");
+            Header("Search text files by content", true, "Start search...");
             Write($"Enter content to search -> ");
             string toSearch = ReadLine();
             FileInfo[] files = mySearch.SearchByContent(toSearch);
@@ -398,10 +377,7 @@ namespace cs_5._3_streams
             bool f = true;
             while (f)
             {
-                Clear();
-                WriteLine($"MENU\n | -- Search by content\n\t | -- Files manipilation\n");
-                WriteLine($"Current directory: { mySearch.Directory.FullName}");
-                Write("-----\n");
+                Header("Search text files by content", true, "Files manipilation");
                 WriteLine($"1. Delete file");
                 WriteLine($"2. Copy to...");
                 WriteLine($"3. Move to...");
@@ -441,10 +417,10 @@ namespace cs_5._3_streams
 
         public void Submenu_Delete()
         {
-            Clear();
-            WriteLine($"MENU\n | -- Search by content\n\t | -- Files manipilation\n\t | -- Delete\n");
+            Header("Search text files by content", false, "Files Manipulation", "Delete");
             Write($"Enter text file name to delete -> {mySearch.Directory.FullName}\\");
             string toDelete = ReadLine();
+            Write("-----\n");
             string formattedFileName = (toDelete.Contains('.') ? toDelete : toDelete + ".txt");
             if (mySearch.fileIsFound(formattedFileName))
             {
@@ -486,6 +462,24 @@ namespace cs_5._3_streams
             throw new NotImplementedException();
         }
 
+        void Header(string menuItem, bool displayCurrentPath, string subMenuItem = "", string secondSubItem = "")
+        {
+            Clear();
+            Write($"MENU\n ");
+            Write($"{(menuItem == "" ? "" : "| -- ")}{menuItem}\n\t");
+            Write($"{(subMenuItem == "" ? "" : "| -- ")}{subMenuItem}\n\t\t");
+            Write($"{(secondSubItem == "" ? "" : "| -- ")}{secondSubItem}\n");
+            Write("\n");
+            if (displayCurrentPath)
+            {
+                WriteLine($"Current directory: { mySearch.Directory.FullName}");
+                Write("-----\n");
+            }
+
+
+
+        }
+
     }
 
     static class StringExtendClass
@@ -499,6 +493,4 @@ namespace cs_5._3_streams
             return source != null && toCheck != null && source.IndexOf(toCheck, comp) >= 0;
         }
     }
-
-
 }
