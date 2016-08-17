@@ -12,12 +12,12 @@ namespace cs_5._3_streams
 {
     class SearchEngine
     {
-        public DirectoryInfo Directory { get; set; }
+        public DirectoryInfo CurrentDirectory { get; set; }
 
         public bool SetNewPath(string str)
         {
-            Directory = new DirectoryInfo(@str);
-            if (Directory.Exists)
+            CurrentDirectory = new DirectoryInfo(@str);
+            if (CurrentDirectory.Exists)
                 return true;
             else
                 return false;
@@ -25,12 +25,12 @@ namespace cs_5._3_streams
 
         public FileInfo[] SearchFiles(string toSearch)
         {
-            return Directory.GetFiles("*" + toSearch + "*", SearchOption.AllDirectories);
+            return CurrentDirectory.GetFiles("*" + toSearch + "*", SearchOption.AllDirectories);
         }
 
         public FileInfo[] SearchBySize(int SizeKB, string option)
         {
-            FileInfo[] tmp = Directory.GetFiles("*", SearchOption.AllDirectories);
+            FileInfo[] tmp = CurrentDirectory.GetFiles("*", SearchOption.AllDirectories);
             List<FileInfo> files = new List<FileInfo>();
             if (option == "L")
             {
@@ -59,7 +59,7 @@ namespace cs_5._3_streams
 
         public FileInfo[] SearchByDate(DateTime date, string option)
         {
-            FileInfo[] tmp = Directory.GetFiles("*", SearchOption.AllDirectories);
+            FileInfo[] tmp = CurrentDirectory.GetFiles("*", SearchOption.AllDirectories);
             List<FileInfo> files = new List<FileInfo>();
             if (option == "L")
             {
@@ -87,11 +87,11 @@ namespace cs_5._3_streams
 
         public FileInfo[] SearchByContent(string toSearch)
         {
-            FileInfo[] tmp = Directory.GetFiles("*.txt", SearchOption.AllDirectories);
+            FileInfo[] tmp = CurrentDirectory.GetFiles("*.txt", SearchOption.AllDirectories);
             List<FileInfo> files = new List<FileInfo>();
             foreach (var file in tmp)
             {
-                StreamReader reader = File.OpenText(Directory.ToString() + "\\" + file.ToString());
+                StreamReader reader = File.OpenText(CurrentDirectory.ToString() + "\\" + file.ToString());
                 string input;
                 while ((input = reader.ReadLine()) != null)
                 {
@@ -108,12 +108,12 @@ namespace cs_5._3_streams
 
         public DirectoryInfo[] SearchDirs(string toSearch)
         {
-            return Directory.GetDirectories("*" + toSearch + "*", SearchOption.AllDirectories);
+            return CurrentDirectory.GetDirectories("*" + toSearch + "*", SearchOption.AllDirectories);
         }
 
-        public bool fileIsFound(string formattedFileName)
+        public bool fileIsFound(string fileName)
         {
-            var file = new FileInfo($"{Directory.FullName}\\{formattedFileName}");
+            var file = new FileInfo($"{CurrentDirectory.FullName}\\{fileName}");
             if (file.Exists)
                 return true;
             else
@@ -122,13 +122,24 @@ namespace cs_5._3_streams
 
         public void DeleteFile(string formattedFileName)
         {
-            var file = new FileInfo($"{Directory.FullName}\\{formattedFileName}");
+            var file = new FileInfo($"{CurrentDirectory.FullName}\\{formattedFileName}");
             file.Delete();
+        }
+
+        public void CopyFile(string source, string dest, string file)
+        {
+            string sourceFile = Path.Combine(source, file);
+            string destFile = Path.Combine(dest, file);
+            if (!Directory.Exists(dest))
+            {
+                Directory.CreateDirectory(dest);
+            }
+            File.Copy(sourceFile, destFile, true);
         }
 
         public SearchEngine()
         {
-            Directory = new DirectoryInfo(@".");
+            CurrentDirectory = new DirectoryInfo(@".");
         }
     }
 }

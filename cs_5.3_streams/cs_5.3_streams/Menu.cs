@@ -120,11 +120,11 @@ namespace cs_5._3_streams
             {
                 Header("Search Files and Folders", false, "Change directory");
                 Write($"Enter new path -> ");
-                SendKeys.SendWait($"{mySearch.Directory.FullName}");
+                SendKeys.SendWait($"{mySearch.CurrentDirectory.FullName}");
                 string str = ReadLine();
                 if (mySearch.SetNewPath(str))
                 {
-                    Write($"New path: { mySearch.Directory.FullName}");
+                    Write($"New path: { mySearch.CurrentDirectory.FullName}");
                     correctPath = true;
                 }
                 else
@@ -418,7 +418,7 @@ namespace cs_5._3_streams
         public void Submenu_Delete()
         {
             Header("Search text files by content", false, "Files Manipulation", "Delete");
-            Write($"Enter text file name to delete -> {mySearch.Directory.FullName}\\");
+            Write($"Enter text file name to delete -> {mySearch.CurrentDirectory.FullName}\\");
             string toDelete = ReadLine();
             Write("-----\n");
             string formattedFileName = (toDelete.Contains('.') ? toDelete : toDelete + ".txt");
@@ -438,7 +438,7 @@ namespace cs_5._3_streams
             }
             else
             {
-                WriteLine($"File {formattedFileName} not found.");
+                WriteLine($"File {formattedFileName} is not found.");
             }
 
             Write("\n\nPress any key to return...");
@@ -449,7 +449,27 @@ namespace cs_5._3_streams
 
         public void Submenu_CopyTo()
         {
+            Header("Search text files by content", false, "Files Manipulation", "Copy to ...");
+            Write($"Enter text file name to copy -> {mySearch.CurrentDirectory.FullName}\\");
+            string toCopy = ReadLine();
 
+            string formattedFileName = (toCopy.Contains('.') ? toCopy : toCopy + ".txt");
+            if (mySearch.fileIsFound(formattedFileName))
+            {
+                Write($"\nEnter destination path -> ");
+                SendKeys.SendWait($"{mySearch.CurrentDirectory.FullName}");
+                string destPath = ReadLine();
+                mySearch.CopyFile(mySearch.CurrentDirectory.FullName, destPath, formattedFileName);
+                WriteLine($"File {formattedFileName} was succesfully copied to {destPath}");
+            }
+            else
+            {
+                WriteLine($"File {formattedFileName} is not found.");
+            }
+            Write("\n\nPress any key to return...");
+            // Delay
+            ReadKey();
+            Clear();
         }
 
         public void Submenu_MoveTo()
@@ -472,7 +492,7 @@ namespace cs_5._3_streams
             Write("\n");
             if (displayCurrentPath)
             {
-                WriteLine($"Current directory: { mySearch.Directory.FullName}");
+                WriteLine($"Current directory: { mySearch.CurrentDirectory.FullName}");
                 Write("-----\n");
             }
 
