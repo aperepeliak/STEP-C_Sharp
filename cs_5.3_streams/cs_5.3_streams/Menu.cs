@@ -93,7 +93,7 @@ namespace cs_5._3_streams
                             f = false;
                             break;
                         case 1:
-                            Submenu_ChangeActiveDirectory();
+                            Submenu_ChangeActiveDirectory("Search Files and Folders");
                             break;
                         case 2:
                             Submenu_SearchByName();
@@ -116,13 +116,13 @@ namespace cs_5._3_streams
             }
         }
 
-        public void Submenu_ChangeActiveDirectory()
+        public void Submenu_ChangeActiveDirectory(string menuItem)
         {
             bool correctPath = false;
             while (!correctPath)
             {
                 Clear();
-                WriteLine($"MENU\n | -- Search Files and Folders\n\t | -- Change directory\n");
+                WriteLine($"MENU\n | -- {menuItem}\n\t | -- Change directory\n");
                 Write($"Enter new path -> ");
                 SendKeys.SendWait($"{mySearch.Directory.FullName}");
                 string str = ReadLine();
@@ -225,7 +225,7 @@ namespace cs_5._3_streams
             string option = ReadLine();
             Write($"Enter size in KB -> ");
             int toSearch = ToInt32(ReadLine());
-            FileInfo[] files = mySearch.SearchBySize(toSearch, (option == "M"? "M" : "L"));
+            FileInfo[] files = mySearch.SearchBySize(toSearch, (option == "M" ? "M" : "L"));
             WriteLine($"{files.Length} file{(files.Length == 1 ? "" : "s")} found");
 
             ShowFiles(files);
@@ -239,7 +239,7 @@ namespace cs_5._3_streams
             Write("-----\n");
             Write($"Search for files that are created Earlier than ('E' - default) or Later than ('L')? -> ");
             string option = ReadLine();
-            Write($"Enter date ('dd-mm-yy' or 'dd.mm.yy') -> ");
+            Write($"Enter date ('dd-mm-yyyy' or 'dd.mm.yyyy') -> ");
             DateTime toSearch = ToDateTime(ReadLine());
             FileInfo[] files = mySearch.SearchByDate(toSearch, (option == "L" ? "L" : "E"));
             WriteLine($"{files.Length} file{(files.Length == 1 ? "" : "s")} found");
@@ -331,24 +331,77 @@ namespace cs_5._3_streams
             Clear();
         }
 
+        private void Submenu_SearchByContent()
+        {
+            bool f = true;
+            while (f)
+            {
+                Clear();
+                WriteLine($"MENU\n | -- Search text files by content\n");
+                WriteLine($"Current directory: {mySearch.Directory.FullName}");
+                WriteLine("------");
+                WriteLine($"1. Change directory");
+                WriteLine($"2. Start search...");
+                WriteLine($"0. Back to main menu");
+                WriteLine("------");
+                Write($"Your choice -> ");
+
+                try
+                {
+                    switch (ToInt32(ReadLine()))
+                    {
+                        case 0:
+                            f = false;
+                            break;
+                        case 1:
+                            Submenu_ChangeActiveDirectory("Search by content");
+                            break;
+                        case 2:
+                            Submenu_SearchContent();
+                            break;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Clear();
+                    WriteLine(e.Message);
+                    Write($"\nPress any key to retry ...");
+                    ReadKey();
+                }
+            }
+        }
+
+        public void Submenu_SearchContent()
+        {
+            Clear();
+            WriteLine($"MENU\n | -- Search by content\n\t | -- Start search...\n");
+            WriteLine($"Current directory: { mySearch.Directory.FullName}");
+            Write("-----\n");
+            Write($"Enter content to search -> ");
+            string toSearch = ReadLine();
+            FileInfo[] files = mySearch.SearchByContent(toSearch);
+            WriteLine($"{files.Length} file{(files.Length == 1 ? "" : "s")} found");
+
+            ShowFiles(files);
+
+        }
+
         private void Submenu_RemoveHTMLTags()
         {
             throw new NotImplementedException();
         }
 
-        private void Submenu_SearchByContent()
-        {
-            throw new NotImplementedException();
-        }
-
-
     }
 
-    static class StringTruncate
+    static class StringExtendClass
     {
         public static string Truncate(this string str, int maxLength)
         {
             return str.Substring(0, Math.Min(str.Length, maxLength));
+        }
+        public static bool Contains(this string source, string toCheck, StringComparison comp)
+        {
+            return source != null && toCheck != null && source.IndexOf(toCheck, comp) >= 0;
         }
     }
 

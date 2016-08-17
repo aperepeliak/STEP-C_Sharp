@@ -42,7 +42,8 @@ namespace cs_5._3_streams
                     }
                 }
                 return files.ToArray();
-            } else
+            }
+            else
             {
                 foreach (var file in tmp)
                 {
@@ -53,7 +54,7 @@ namespace cs_5._3_streams
                 }
                 return files.ToArray();
             }
-            
+
         }
 
         public FileInfo[] SearchByDate(DateTime date, string option)
@@ -82,6 +83,26 @@ namespace cs_5._3_streams
                 }
                 return files.ToArray();
             }
+        }
+
+        public FileInfo[] SearchByContent(string toSearch)
+        {
+            FileInfo[] tmp = Directory.GetFiles("*.txt", SearchOption.AllDirectories);
+            List<FileInfo> files = new List<FileInfo>();
+            foreach (var file in tmp)
+            {
+                StreamReader reader = File.OpenText(Directory.ToString() + "\\" + file.ToString());
+                string input;
+                while ((input = reader.ReadLine()) != null)
+                {
+                    if (input.Contains(toSearch, StringComparison.OrdinalIgnoreCase))
+                    {
+                        files.Add(file);
+                    }
+                }
+                reader.Close();
+            }
+            return files.ToArray();
         }
 
         public DirectoryInfo[] SearchDirs(string toSearch)
