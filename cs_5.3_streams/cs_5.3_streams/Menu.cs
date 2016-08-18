@@ -527,9 +527,74 @@ namespace cs_5._3_streams
             Clear();
         }
 
-        public void Submenu_RemoveHTMLTags()
+        void Submenu_RemoveHTMLTags()
         {
-            throw new NotImplementedException();
+            bool f = true;
+            while (f)
+            {
+                Header("Remove HTML tags", true);
+                WriteLine($"1. Change directory");
+                WriteLine($"2. Choose file and parse");
+                WriteLine($"0. Back to main menu");
+                WriteLine("------");
+                Write($"Your choice -> ");
+                try
+                {
+                    switch (ToInt32(ReadLine()))
+                    {
+                        case 0:
+                            f = false;
+                            break;
+
+                        case 1:
+                            Submenu_ChangeActiveDirectory();
+                            break;
+
+                        case 2:
+                            Submenu_StartParse();
+                            break;
+                    }
+                }
+                catch
+                {
+                    Clear();
+                    WriteLine("Error! Invalid input");
+                    Write($"\nPress any key to retry ...");
+                    ReadKey();
+                }
+            }
+        }
+
+        void Submenu_StartParse()
+        {
+            Header("Remove HTML tags", false, "Choose file and parse");
+            Write($"Choose an .html file to process -> {mySearch.CurrentDirectory.FullName}\\");
+            string toParse = ReadLine();
+            string formattedFileName = (toParse.Contains('.') ? toParse : toParse + ".html");
+
+            if (mySearch.fileIsFound(formattedFileName))
+            {
+                Write($"\nEnter new file name -> ");
+                SendKeys.SendWait($"{formattedFileName}");
+                string newFileName = ReadLine();
+
+                Write($"\nEnter destination path -> ");
+                SendKeys.SendWait($"{mySearch.CurrentDirectory.FullName}");
+                string destPath = ReadLine();
+
+                mySearch.RemoveHTMLtags(formattedFileName, newFileName, destPath);
+
+                WriteLine($"File {newFileName} was created and saved to {destPath}");
+
+            }
+            else
+            {
+                WriteLine($"File {formattedFileName} is not found.");
+            }
+            Write("\n\nPress any key to return...");
+            // Delay
+            ReadKey();
+            Clear();
         }
 
         void Header(string menuItem, bool displayCurrentPath, string subMenuItem = "", string secondSubItem = "")
@@ -545,9 +610,6 @@ namespace cs_5._3_streams
                 WriteLine($"Current directory: { mySearch.CurrentDirectory.FullName}");
                 Write("-----\n");
             }
-
-
-
         }
 
     }

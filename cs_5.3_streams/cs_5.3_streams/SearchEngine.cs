@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using static System.Console;
@@ -143,6 +144,20 @@ namespace cs_5._3_streams
             string text = File.ReadAllText(file.FullName.ToString());
             text = text.Replace(oldValue, newValue);
             File.WriteAllText(file.FullName.ToString(), text);
+        }
+
+        public void RemoveHTMLtags(string sourceFile, string newFileName, string destPath)
+        {
+            var file = new FileInfo($"{CurrentDirectory.FullName}\\{sourceFile}");
+            string htmlText = File.ReadAllText(file.FullName.ToString());
+            string resultText = Regex.Replace(htmlText, @"<[^>]*>", String.Empty);
+
+            var newFile = new FileStream($"{destPath}\\{newFileName}", FileMode.Create, FileAccess.Write);
+
+            var writer = new StreamWriter(newFile);
+            writer.Write(resultText);
+            writer.Close();
+
         }
 
         public SearchEngine()
