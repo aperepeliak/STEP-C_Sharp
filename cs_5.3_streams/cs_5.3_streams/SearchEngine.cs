@@ -11,6 +11,9 @@ using static System.Convert;
 
 namespace cs_5._3_streams
 {
+    /// <summary>
+    /// Содержит различные методы поиска данных и их обработки на локальных дисках.
+    /// </summary>
     class SearchEngine
     {
         public DirectoryInfo CurrentDirectory { get; set; }

@@ -11,9 +11,11 @@ using static System.Convert;
 
 namespace cs_5._3_streams
 {
+    /// <summary>
+    /// Класс предназначен для удобного отображения возможностей поиска и его результатов
+    /// </summary>
     class Menu
     {
-
         SearchEngine mySearch;
 
         public Menu()
@@ -21,6 +23,7 @@ namespace cs_5._3_streams
             mySearch = new SearchEngine();
         }
 
+        // Основное меню программы
         public void Start()
         {
             bool f = true;
@@ -59,15 +62,15 @@ namespace cs_5._3_streams
                 }
                 catch
                 {
-                    Clear();
-                    WriteLine("Error! Invalid input");
-                    Write($"\nPress any key to retry ...");
-                    ReadKey();
+                    CatchDisplay();
                 }
                 Clear();
             }
         }
 
+        /// <summary>
+        /// Меню для поиска файлов и папок по имени, размеру и дате создания
+        /// </summary>
         void Submenu_SearchFilesAndFolders()
         {
             bool f = true;
@@ -105,14 +108,15 @@ namespace cs_5._3_streams
                 }
                 catch
                 {
-                    Clear();
-                    WriteLine("Error! Invalid input");
-                    Write($"\nPress any key to retry ...");
-                    ReadKey();
+                    CatchDisplay();
                 }
             }
         }
 
+        /// <summary>
+        /// Изменение рабочей папки. Также проверяет на правильность вводимого пути.
+        /// В рабочей папке в дальнейшем осуществляются все виды поисков.
+        /// </summary>
         void Submenu_ChangeActiveDirectory()
         {
             bool correctPath = false;
@@ -132,10 +136,7 @@ namespace cs_5._3_streams
                     Write($"New path: path not found");
                     correctPath = false;
                 }
-                // Delay
-                Write($"\n\nPress any key to continue ...");
-                ReadKey();
-                Clear();
+                Footer();
             }
         }
 
@@ -198,14 +199,10 @@ namespace cs_5._3_streams
                 }
                 catch
                 {
-                    Clear();
-                    WriteLine("Error! Invalid input");
-                    Write($"\nPress any key to retry ...");
-                    ReadKey();
+                    CatchDisplay();
                 }
             } while (subFlag);
         }
-
         void Submenu_SearchBySize()
         {
             Header("Search Files and Folders", true, "Search by Size");
@@ -218,7 +215,6 @@ namespace cs_5._3_streams
 
             ShowFiles(files);
         }
-
         void Submenu_SearchByDate()
         {
             Header("Search Files and Folders", true, "Search by Creation Date");
@@ -232,6 +228,7 @@ namespace cs_5._3_streams
             ShowFiles(files);
         }
 
+        // Функция отображения найденных файлов в удобном табличном виде
         void ShowFiles(FileInfo[] files)
         {
             int i = 1;
@@ -272,13 +269,10 @@ namespace cs_5._3_streams
                 Write($"| {file.Extension.Truncate(5)}");
                 yPos++;
             }
-
-            Write("\n\nPress any key to return...");
-            // Delay
-            ReadKey();
-            Clear();
+            Footer();
         }
 
+        // Функция отображения найденных папок в удобном табличном виде
         void ShowDirs(DirectoryInfo[] dirs)
         {
             int i = 1;
@@ -310,12 +304,13 @@ namespace cs_5._3_streams
                 Write($"| {dir.FullName.Truncate(dirFullNameMaxLength)}");
                 yPos++;
             }
-            Write("\n\nPress any key to return...");
-            // Delay
-            ReadKey();
-            Clear();
+            Footer();
         }
 
+        /// <summary>
+        /// Подменю по поиску текстовых файлов по их содержимому, а также работа с найденным списком -
+        /// удаление, перемещение, копирование, замена в выбранных текстовых файлах одной подстроки на другую
+        /// </summary>
         void Submenu_SearchByContent()
         {
             bool f = true;
@@ -352,10 +347,7 @@ namespace cs_5._3_streams
                 }
                 catch
                 {
-                    Clear();
-                    WriteLine("Error! Invalid input");
-                    Write($"\nPress any key to retry ...");
-                    ReadKey();
+                    CatchDisplay();
                 }
             }
         }
@@ -409,10 +401,7 @@ namespace cs_5._3_streams
                 }
                 catch
                 {
-                    Clear();
-                    WriteLine("Error! Invalid input");
-                    Write($"\nPress any key to retry ...");
-                    ReadKey();
+                    CatchDisplay();
                 }
             }
         }
@@ -442,13 +431,8 @@ namespace cs_5._3_streams
             {
                 WriteLine($"File {formattedFileName} is not found.");
             }
-
-            Write("\n\nPress any key to return...");
-            // Delay
-            ReadKey();
-            Clear();
+            Footer();
         }
-        
         void Submenu_CopyTo()
         {
             Header("Search text files by content", false, "Files Manipulation", "Copy to ...");
@@ -468,12 +452,8 @@ namespace cs_5._3_streams
             {
                 WriteLine($"File {formattedFileName} is not found.");
             }
-            Write("\n\nPress any key to return...");
-            // Delay
-            ReadKey();
-            Clear();
+            Footer();
         }
-
         void Submenu_MoveTo()
         {
             Header("Search text files by content", false, "Files Manipulation", "Move to ...");
@@ -494,13 +474,8 @@ namespace cs_5._3_streams
             {
                 WriteLine($"File {formattedFileName} is not found.");
             }
-            Write("\n\nPress any key to return...");
-            // Delay
-            ReadKey();
-            Clear();
-
+            Footer();
         }
-
         void Submenu_Edit()
         {
             Header("Search text files by content", false, "Files Manipulation", "Edit");
@@ -521,12 +496,14 @@ namespace cs_5._3_streams
             {
                 WriteLine($"File {formattedFileName} is not found.");
             }
-            Write("\n\nPress any key to return...");
-            // Delay
-            ReadKey();
-            Clear();
+            Footer();
         }
 
+        /// <summary>
+        /// Меню по работе с файлами, содержащими html-разметку.
+        /// С помощью регулярных выражений осуществляется очистка от тегов содержимого переданного файла.
+        /// Результат сохраняется в другой текстовый файл, имя и путь которого указывается пользователем.
+        /// </summary>
         void Submenu_RemoveHTMLTags()
         {
             bool f = true;
@@ -557,10 +534,7 @@ namespace cs_5._3_streams
                 }
                 catch
                 {
-                    Clear();
-                    WriteLine("Error! Invalid input");
-                    Write($"\nPress any key to retry ...");
-                    ReadKey();
+                    CatchDisplay();
                 }
             }
         }
@@ -591,12 +565,12 @@ namespace cs_5._3_streams
             {
                 WriteLine($"File {formattedFileName} is not found.");
             }
-            Write("\n\nPress any key to return...");
-            // Delay
-            ReadKey();
-            Clear();
+            Footer();
         }
 
+        /// <summary>
+        /// Вспомогательные функции навигации по меню
+        /// </summary>
         void Header(string menuItem, bool displayCurrentPath, string subMenuItem = "", string secondSubItem = "")
         {
             Clear();
@@ -611,9 +585,26 @@ namespace cs_5._3_streams
                 Write("-----\n");
             }
         }
-
+        void Footer()
+        {
+            Write("\n\nPress any key to return...");
+            ReadKey();
+            Clear();
+        }
+        void CatchDisplay()
+        {
+            Clear();
+            WriteLine("Error! Invalid input");
+            Write($"\nPress any key to retry ...");
+            ReadKey();
+        }
     }
 
+    /// <summary>
+    /// Расширяющие методы для string.
+    /// Truncate - обрезает строку, превышающую макс. кол-во символов. Макс. кол-во передается в качестве параметра
+    /// Contains - в отличие от стандартного Contains, данный метод не чувствителен к регистру
+    /// </summary>
     static class StringExtendClass
     {
         public static string Truncate(this string str, int maxLength)
