@@ -10,6 +10,8 @@ namespace cs_6._1_collections
     {
         static void Main(string[] args)
         {
+            Menu university = new Menu();
+            university.Start();
         }
     }
 }
