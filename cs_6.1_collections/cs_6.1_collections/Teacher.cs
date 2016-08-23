@@ -67,6 +67,6 @@ namespace cs_6._1_collections
         public void Show()
         {
             WriteLine($"{FirstName} {LastName}");
-        } 
+        }
     }
 }

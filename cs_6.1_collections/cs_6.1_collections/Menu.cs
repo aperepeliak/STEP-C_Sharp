@@ -141,6 +141,7 @@ namespace cs_6._1_collections
                             break;
 
                         case 9:
+                            TeachersAndStudents();
                             break;
 
                         case 10:
@@ -157,6 +158,23 @@ namespace cs_6._1_collections
                 }
                 Clear();
             }
+        }
+
+        private void TeachersAndStudents()
+        {
+            WriteLine("Results:");
+            foreach (var teacher in teachers)
+            {
+                Write($"{teacher.FirstName} {teacher.LastName} \t (students: ");
+                foreach (var item in teacher.myStudents)
+                {
+                    Write($"{students[item].FirstName} {students[item].LastName}, ");
+                }
+                SetCursorPosition(CursorLeft - 2, CursorTop);
+                WriteLine(")");
+            }
+            WriteLine("Press any key to continue...");
+            ReadKey();
         }
 
         private void ActiveStudents()
@@ -177,7 +195,8 @@ namespace cs_6._1_collections
                 {
                     WriteLine($"{student.FirstName} {student.LastName} (number of grades: {student.grades.Count})");
                 }
-            } else
+            }
+            else
             {
                 WriteLine("No match found");
             }
