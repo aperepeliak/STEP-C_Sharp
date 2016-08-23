@@ -22,6 +22,7 @@ namespace cs_6._1_collections
             FileInfo file = new FileInfo("Students.txt");
             if (file.Exists)
             {
+
                 StreamReader reader = File.OpenText(file.ToString());
                 string input;
                 while ((input = reader.ReadLine()) != null)
@@ -149,6 +150,7 @@ namespace cs_6._1_collections
                             break;
 
                         case 11:
+                            StudentsWithSpecificTeacher();
                             break;
                     }
                 }
@@ -159,6 +161,67 @@ namespace cs_6._1_collections
                 }
                 Clear();
             }
+        }
+
+        private void StudentsWithSpecificTeacher()
+        {
+            Write("\nChoose a teacher -> ");
+
+            int n = teachers.Count;
+            int count = 0;
+            bool enterPressed = false;
+            List<Student> result = new List<Student>();
+            Write($"< {teachers[count].FirstName} {teachers[count].LastName} >");
+
+            while (!enterPressed)
+            {
+                int posX = 20;
+                int posY = 14;
+                if (KeyAvailable)
+                {
+                    ConsoleKeyInfo key = ReadKey(true);
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.RightArrow:
+                            count = (count < n - 1) ? count + 1 : 0;
+                            SetCursorPosition(posX, posY);
+                            Write(new string(' ', WindowWidth));
+                            SetCursorPosition(posX, posY);
+                            Write($"< {teachers[count].FirstName} {teachers[count].LastName} >");
+                            break;
+                        case ConsoleKey.LeftArrow:
+                            count = (count == 0) ? n - 1 : count - 1;
+                            SetCursorPosition(posX, posY);
+                            Write(new string(' ', WindowWidth));
+                            SetCursorPosition(posX, posY);
+                            Write($"< {teachers[count].FirstName} {teachers[count].LastName} >");
+                            break;
+                        case ConsoleKey.Enter:
+                            enterPressed = true;
+                            foreach (var item in teachers[count].myStudents)
+                            {
+                                if (students[item].grades.Contains(10) || students[item].grades.Contains(11) || students[item].grades.Contains(12))
+                                    result.Add(students[item]);
+                            }
+                            break;
+                    }
+                }
+            }
+            Write("\n");
+            if (result.Count > 0)
+            {
+                foreach (var student in result)
+                {
+                    WriteLine($"{student.FirstName} {student.LastName}");
+                }
+            }
+            else
+            {
+                WriteLine("No matches found");
+            }
+
+            WriteLine("Press any key to continue...");
+            ReadKey();
         }
 
         private void MostActiveTeacher()
