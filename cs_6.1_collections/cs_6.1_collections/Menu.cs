@@ -39,11 +39,12 @@ namespace cs_6._1_collections
                             grades.Add(ToInt32(grade));
                         }
                         students.Add(new Student(firstN, lastN, teachID, grades));
-                    } else
+                    }
+                    else
                     {
                         students.Add(new Student(firstN, lastN, teachID));
                     }
-                    
+
                 }
                 reader.Close();
             }
@@ -73,16 +74,9 @@ namespace cs_6._1_collections
                     {
                         teachers.Add(new Teacher(firstN, lastN));
                     }
-
-
-
-
                 }
                 reader.Close();
             }
-
-
-
         }
 
         public void Start()
@@ -95,12 +89,13 @@ namespace cs_6._1_collections
                 WriteLine("2. List all teachers");
                 WriteLine("3. Add student");
                 WriteLine("4. Add teacher");
-                WriteLine("5. A teacher with the biggest number of students");
-                WriteLine("6. List students with an average grade higher than 10");
-                WriteLine("7. List students who have more than 3 grades");
-                WriteLine("8. Teachers and their students");
-                WriteLine("9. The most active teacher");
-                WriteLine("10. Choose students who have teacher XXX and have at least one 10, 11 or 12 grade");
+                WriteLine("5. Add grade");
+                WriteLine("6. A teacher with the biggest number of students");
+                WriteLine("7. List students with an average grade higher than 10");
+                WriteLine("8. List students who have more than 3 grades");
+                WriteLine("9. Teachers and their students");
+                WriteLine("10. The most active teacher");
+                WriteLine("11. Choose students who have teacher XXX and have at least one 10, 11 or 12 grade");
                 Write("Your choice -> ");
                 try
                 {
@@ -124,6 +119,8 @@ namespace cs_6._1_collections
                             break;
 
                         case 4:
+                            AddTeacher();
+                            SaveChanges();
                             break;
 
                         case 5:
@@ -143,21 +140,39 @@ namespace cs_6._1_collections
 
                         case 10:
                             break;
+
+                        case 11:
+                            break;
                     }
                 }
-                catch (Exception e) { WriteLine(e.Message); }
-                ReadKey();
+                catch (Exception e)
+                {
+                    WriteLine(e.Message);
+                    ReadKey();
+                }
                 Clear();
             }
 
 
         }
 
+        private void AddTeacher()
+        {
+            Write("\nAdd first name -> ");
+            string newFirstName = ReadLine();
+            Write("Add last name -> ");
+            string newLastName = ReadLine();
+            teachers.Add(new Teacher(newFirstName, newLastName));
+            WriteLine("\n\nThe new teacher was succesfully added.");
+            WriteLine("Press any key to continue...");
+            ReadKey();
+        }
+
         private void AddStudent()
         {
             Write("\nAdd first name -> ");
             string newFirstName = ReadLine();
-            Write("\nAdd last name -> ");
+            Write("Add last name -> ");
             string newLastName = ReadLine();
             Write("\nAssign a teacher -> ");
 
@@ -192,6 +207,11 @@ namespace cs_6._1_collections
                             break;
                         case ConsoleKey.Enter:
                             enterPressed = true;
+                            students.Add(new Student(newFirstName, newLastName, count));
+                            teachers[count].myStudents.Add(students[students.Count - 1].StudentID);
+                            WriteLine("\n\nThe new student was succesfully added.");
+                            WriteLine("Press any key to continue...");
+                            ReadKey();
                             break;
                         default:
                             break;
@@ -222,7 +242,24 @@ namespace cs_6._1_collections
 
         void SaveChanges()
         {
+            FileInfo file = new FileInfo("Students.txt");
+            StreamWriter writer = file.CreateText();
+            foreach (var student in students)
+            {
+                string concat = string.Join(",", student.grades.ToArray());
+                writer.WriteLine($"{student.FirstName},{student.LastName};{student.TeacherID};{(concat != "" ? concat : "")}");
 
+            }
+            writer.Close();
+
+            file = new FileInfo("Teachers.txt");
+            writer = file.CreateText();
+            foreach (var teacher in teachers)
+            {
+                string concat = string.Join(",", teacher.myStudents.ToArray());
+                writer.WriteLine($"{teacher.FirstName},{teacher.LastName};{(concat != "" ? concat : "")}");
+            }
+            writer.Close();
         }
     }
 }

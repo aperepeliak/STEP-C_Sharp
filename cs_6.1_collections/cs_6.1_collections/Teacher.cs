@@ -46,7 +46,7 @@ namespace cs_6._1_collections
 
         public int TeacherID { get; }
 
-        List<int> myStudents;
+        public List<int> myStudents;
 
         public Teacher(string firstN, string lastN)
         {
