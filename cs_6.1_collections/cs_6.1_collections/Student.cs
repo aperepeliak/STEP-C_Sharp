@@ -71,8 +71,7 @@ namespace cs_6._1_collections
 
         public void Show()
         {
-            WriteLine($"First Name: {FirstName}");
-            WriteLine($"Last Name: {LastName}");
+            WriteLine($"{FirstName} {LastName}");;
             WriteLine($"Teacher ID: {TeacherID}");
             Write($"Grades: ");
             foreach (var grade in grades)
@@ -80,7 +79,6 @@ namespace cs_6._1_collections
                 Write($" {grade} ");
             }
             Write("\n-----------\n");
-
         }
     }
 }

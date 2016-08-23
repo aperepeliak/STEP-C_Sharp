@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using static System.Console;
+
 namespace cs_6._1_collections
 {
     class Teacher
@@ -44,14 +46,27 @@ namespace cs_6._1_collections
 
         public int TeacherID { get; }
 
-        List<Student> myStudents;
+        List<int> myStudents;
 
         public Teacher(string firstN, string lastN)
         {
             TeacherID = counterID++;
             FirstName = firstN;
             LastName = lastN;
-            myStudents = new List<Student>();
+            myStudents = new List<int>();
         }
+
+        public Teacher(string firstN, string lastN, List<int> _studs)
+        {
+            TeacherID = counterID++;
+            FirstName = firstN;
+            LastName = lastN;
+            myStudents = new List<int>(_studs);
+        }
+
+        public void Show()
+        {
+            WriteLine($"{FirstName} {LastName}");
+        } 
     }
 }
