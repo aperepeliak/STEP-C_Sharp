@@ -133,6 +133,7 @@ namespace cs_6._1_collections
                             break;
 
                         case 7:
+                            Nerds();
                             break;
 
                         case 8:
@@ -155,6 +156,35 @@ namespace cs_6._1_collections
                 }
                 Clear();
             }
+        }
+
+        private void Nerds()
+        {
+            List<Student> nerds = new List<Student>();
+            foreach (var student in students)
+            {
+                if (student.grades.Average() > 10)
+                {
+                    nerds.Add(student);
+                }
+            }
+            WriteLine("Result");
+            if (nerds.Count > 0)
+            {
+                foreach (var student in nerds)
+                {
+                    WriteLine("{0} {1} (average grade: {2:F2})", 
+                        student.FirstName, 
+                        student.LastName, 
+                        student.grades.Average());
+                }
+            }
+            else
+            {
+                WriteLine("No match found");
+            }
+            WriteLine("Press any key to continue...");
+            ReadKey();
         }
 
         private void MostPopularTeacher()
