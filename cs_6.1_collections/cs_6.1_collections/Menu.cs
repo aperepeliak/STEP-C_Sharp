@@ -94,7 +94,7 @@ namespace cs_6._1_collections
                 WriteLine("7. List students with an average grade higher than 10");
                 WriteLine("8. List students who have more than 3 grades");
                 WriteLine("9. Teachers and their students");
-                WriteLine("10. The most active teacher");
+                WriteLine("10. The most active teacher (by number of grades)");
                 WriteLine("11. Choose students who have teacher XXX and have at least one 10, 11 or 12 grade");
                 Write("Your choice -> ");
                 try
@@ -145,6 +145,7 @@ namespace cs_6._1_collections
                             break;
 
                         case 10:
+                            MostActiveTeacher();
                             break;
 
                         case 11:
@@ -158,6 +159,29 @@ namespace cs_6._1_collections
                 }
                 Clear();
             }
+        }
+
+        private void MostActiveTeacher()
+        {
+            WriteLine("Result:");
+            int maxGrades = 0;
+            int maxID = 0;
+            foreach (var teacher in teachers)
+            {
+                int numGrades = 0;
+                foreach (var item in teacher.myStudents)
+                {
+                    numGrades += students[item].grades.Count;
+                }
+                if (numGrades > maxGrades)
+                {
+                    maxGrades = numGrades;
+                    maxID = teacher.TeacherID;
+                }
+            }
+            WriteLine($"{teachers[maxID].FirstName} {teachers[maxID].LastName} gave the most grades ({maxGrades})");
+            WriteLine("Press any key to continue...");
+            ReadKey();
         }
 
         private void TeachersAndStudents()
