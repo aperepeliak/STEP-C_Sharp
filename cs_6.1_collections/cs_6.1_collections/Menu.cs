@@ -137,6 +137,7 @@ namespace cs_6._1_collections
                             break;
 
                         case 8:
+                            ActiveStudents();
                             break;
 
                         case 9:
@@ -158,6 +159,32 @@ namespace cs_6._1_collections
             }
         }
 
+        private void ActiveStudents()
+        {
+            List<Student> activeStudents = new List<Student>();
+            foreach (var student in students)
+            {
+                if (student.grades.Count > 3)
+                {
+                    activeStudents.Add(student);
+                }
+            }
+            WriteLine("Result: ");
+            if (activeStudents.Count > 0)
+            {
+                activeStudents.Sort((x, y) => y.grades.Count.CompareTo(x.grades.Count));
+                foreach (var student in activeStudents)
+                {
+                    WriteLine($"{student.FirstName} {student.LastName} (number of grades: {student.grades.Count})");
+                }
+            } else
+            {
+                WriteLine("No match found");
+            }
+            WriteLine("Press any key to continue...");
+            ReadKey();
+        }
+
         private void Nerds()
         {
             List<Student> nerds = new List<Student>();
@@ -168,14 +195,14 @@ namespace cs_6._1_collections
                     nerds.Add(student);
                 }
             }
-            WriteLine("Result");
+            WriteLine("Result: ");
             if (nerds.Count > 0)
             {
                 foreach (var student in nerds)
                 {
-                    WriteLine("{0} {1} (average grade: {2:F2})", 
-                        student.FirstName, 
-                        student.LastName, 
+                    WriteLine("{0} {1} (average grade: {2:F2})",
+                        student.FirstName,
+                        student.LastName,
                         student.grades.Average());
                 }
             }
