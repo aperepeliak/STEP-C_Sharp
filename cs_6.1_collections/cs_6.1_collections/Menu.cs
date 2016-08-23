@@ -124,6 +124,8 @@ namespace cs_6._1_collections
                             break;
 
                         case 5:
+                            AddGrade();
+                            SaveChanges();
                             break;
 
                         case 6:
@@ -154,6 +156,97 @@ namespace cs_6._1_collections
             }
 
 
+        }
+
+        private void AddGrade()
+        {
+            Write("\nChoose a student -> ");
+            int n = students.Count;
+            int count = 0;
+            bool enterPressed = false;
+
+            Write($"< {students[count].FirstName} {students[count].LastName} >");
+
+            while (!enterPressed)
+            {
+                int posX = 20;
+                int posY = 14;
+                if (KeyAvailable)
+                {
+                    ConsoleKeyInfo key = ReadKey(true);
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.RightArrow:
+                            count = (count < n - 1) ? count + 1 : 0;
+                            SetCursorPosition(posX, posY);
+                            Write(new string(' ', WindowWidth));
+                            SetCursorPosition(posX, posY);
+                            Write($"< {students[count].FirstName} {students[count].LastName} >");
+                            break;
+                        case ConsoleKey.LeftArrow:
+                            count = (count == 0) ? n - 1 : count - 1;
+                            SetCursorPosition(posX, posY);
+                            Write(new string(' ', WindowWidth));
+                            SetCursorPosition(posX, posY);
+                            Write($"< {students[count].FirstName} {students[count].LastName} >");
+                            break;
+                        case ConsoleKey.Enter:
+                            enterPressed = true;
+                            int grade = ChooseGrade();
+                            students[count].grades.Add(grade);
+                            WriteLine("\n\nThe new grade was succesfully added.");
+                            WriteLine("Press any key to continue...");
+                            ReadKey();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+        }
+
+        private int ChooseGrade()
+        {
+            Write("\nChoose grade -> ");
+            int n = 13;
+            int count = 1;
+            bool enterPressed = false;
+
+            Write($"< {count} >");
+
+            while (!enterPressed)
+            {
+                int posX = 16;
+                int posY = 15;
+                if (KeyAvailable)
+                {
+                    ConsoleKeyInfo key = ReadKey(true);
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.RightArrow:
+                            count = (count < n - 1) ? count + 1 : 1;
+                            SetCursorPosition(posX, posY);
+                            Write(new string(' ', WindowWidth));
+                            SetCursorPosition(posX, posY);
+                            Write($"< {count} >");
+                            break;
+                        case ConsoleKey.LeftArrow:
+                            count = (count == 1) ? n - 1 : count - 1;
+                            SetCursorPosition(posX, posY);
+                            Write(new string(' ', WindowWidth));
+                            SetCursorPosition(posX, posY);
+                            Write($"< {count} >");
+                            break;
+                        case ConsoleKey.Enter:
+                            enterPressed = true;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            return count;
         }
 
         private void AddTeacher()
