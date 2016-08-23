@@ -15,71 +15,83 @@ namespace cs_6._1_collections
         List<Student> students;
         List<Teacher> teachers;
 
+        /// <summary>
+        /// Constructor. Initiates lists from source files Students.txt and Teachers.txt in debug directory
+        /// </summary>
         public Menu()
         {
             students = new List<Student>();
             teachers = new List<Teacher>();
             FileInfo file = new FileInfo("Students.txt");
             if (file.Exists)
-            {
-
-                StreamReader reader = File.OpenText(file.ToString());
-                string input;
-                while ((input = reader.ReadLine()) != null)
+                try
                 {
-                    string[] data = input.Split(';');
-                    string firstN = data[0].Split(',')[0];
-                    string lastN = data[0].Split(',')[1];
-                    int teachID = ToInt32(data[1]);
-                    if (data[2] != "")
                     {
-                        string[] gradesString = data[2].Split(',');
-                        List<int> grades = new List<int>();
-                        foreach (string grade in gradesString)
+                        StreamReader reader = File.OpenText(file.ToString());
+                        string input;
+                        while ((input = reader.ReadLine()) != null)
                         {
-                            grades.Add(ToInt32(grade));
+                            string[] data = input.Split(';');
+                            string firstN = data[0].Split(',')[0];
+                            string lastN = data[0].Split(',')[1];
+                            int teachID = ToInt32(data[1]);
+                            if (data[2] != "")
+                            {
+                                string[] gradesString = data[2].Split(',');
+                                List<int> grades = new List<int>();
+                                foreach (string grade in gradesString)
+                                {
+                                    grades.Add(ToInt32(grade));
+                                }
+                                students.Add(new Student(firstN, lastN, teachID, grades));
+                            }
+                            else
+                            {
+                                students.Add(new Student(firstN, lastN, teachID));
+                            }
                         }
-                        students.Add(new Student(firstN, lastN, teachID, grades));
+                        reader.Close();
                     }
-                    else
+
+                    file = new FileInfo("Teachers.txt");
+                    if (file.Exists)
                     {
-                        students.Add(new Student(firstN, lastN, teachID));
+                        StreamReader reader = File.OpenText(file.ToString());
+                        string input;
+                        while ((input = reader.ReadLine()) != null)
+                        {
+                            string[] data = input.Split(';');
+                            string firstN = data[0].Split(',')[0];
+                            string lastN = data[0].Split(',')[1];
+
+                            if (data[1] != "")
+                            {
+                                string[] studsID = data[1].Split(',');
+                                List<int> studs = new List<int>();
+                                foreach (var stud in studsID)
+                                {
+                                    studs.Add(ToInt32(stud));
+                                }
+                                teachers.Add(new Teacher(firstN, lastN, studs));
+                            }
+                            else
+                            {
+                                teachers.Add(new Teacher(firstN, lastN));
+                            }
+                        }
+                        reader.Close();
                     }
-
                 }
-                reader.Close();
-            }
-
-            file = new FileInfo("Teachers.txt");
-            if (file.Exists)
-            {
-                StreamReader reader = File.OpenText(file.ToString());
-                string input;
-                while ((input = reader.ReadLine()) != null)
+                catch
                 {
-                    string[] data = input.Split(';');
-                    string firstN = data[0].Split(',')[0];
-                    string lastN = data[0].Split(',')[1];
-
-                    if (data[1] != "")
-                    {
-                        string[] studsID = data[1].Split(',');
-                        List<int> studs = new List<int>();
-                        foreach (var stud in studsID)
-                        {
-                            studs.Add(ToInt32(stud));
-                        }
-                        teachers.Add(new Teacher(firstN, lastN, studs));
-                    }
-                    else
-                    {
-                        teachers.Add(new Teacher(firstN, lastN));
-                    }
+                    WriteLine("Some of the source files were corrupted. Remove them or fix.");
+                    Environment.Exit(0);
                 }
-                reader.Close();
-            }
         }
 
+        /// <summary>
+        /// Main menu display
+        /// </summary>
         public void Start()
         {
             bool f = true;
@@ -511,6 +523,9 @@ namespace cs_6._1_collections
             ReadKey();
         }
 
+        /// <summary>
+        /// After every change in lists source files are being updated
+        /// </summary>
         void SaveChanges()
         {
             FileInfo file = new FileInfo("Students.txt");
