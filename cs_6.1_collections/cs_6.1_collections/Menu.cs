@@ -129,6 +129,7 @@ namespace cs_6._1_collections
                             break;
 
                         case 6:
+                            MostPopularTeacher();
                             break;
 
                         case 7:
@@ -154,8 +155,23 @@ namespace cs_6._1_collections
                 }
                 Clear();
             }
+        }
 
-
+        private void MostPopularTeacher()
+        {
+            int count = 0;
+            int maxID = 0;
+            foreach (var teacher in teachers)
+            {
+                if (teacher.myStudents.Count > count)
+                {
+                    count = teacher.myStudents.Count;
+                    maxID = teacher.TeacherID;
+                }
+            }
+            WriteLine($"Result: {teachers[maxID].FirstName} {teachers[maxID].LastName} (has {count} students)");
+            WriteLine("Press any key to continue...");
+            ReadKey();
         }
 
         private void AddGrade()
@@ -203,7 +219,6 @@ namespace cs_6._1_collections
                     }
                 }
             }
-
         }
 
         private int ChooseGrade()
