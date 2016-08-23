@@ -351,49 +351,57 @@ namespace cs_6._1_collections
 
         private void AddGrade()
         {
-            Write("\nChoose a student -> ");
-            int n = students.Count;
-            int count = 0;
-            bool enterPressed = false;
-
-            Write($"< {students[count].FirstName} {students[count].LastName} >");
-
-            while (!enterPressed)
+            if (students.Count == 0)
             {
-                int posX = 20;
-                int posY = 14;
-                if (KeyAvailable)
+                WriteLine("You need to add at least one student first.");
+                WriteLine("Press any key to continue...");
+                ReadKey();
+            } else
+            {
+                Write("\nChoose a student -> ");
+                int n = students.Count;
+                int count = 0;
+                bool enterPressed = false;
+
+                Write($"< {students[count].FirstName} {students[count].LastName} >");
+
+                while (!enterPressed)
                 {
-                    ConsoleKeyInfo key = ReadKey(true);
-                    switch (key.Key)
+                    int posX = 20;
+                    int posY = 14;
+                    if (KeyAvailable)
                     {
-                        case ConsoleKey.RightArrow:
-                            count = (count < n - 1) ? count + 1 : 0;
-                            SetCursorPosition(posX, posY);
-                            Write(new string(' ', WindowWidth));
-                            SetCursorPosition(posX, posY);
-                            Write($"< {students[count].FirstName} {students[count].LastName} >");
-                            break;
-                        case ConsoleKey.LeftArrow:
-                            count = (count == 0) ? n - 1 : count - 1;
-                            SetCursorPosition(posX, posY);
-                            Write(new string(' ', WindowWidth));
-                            SetCursorPosition(posX, posY);
-                            Write($"< {students[count].FirstName} {students[count].LastName} >");
-                            break;
-                        case ConsoleKey.Enter:
-                            enterPressed = true;
-                            int grade = ChooseGrade();
-                            students[count].grades.Add(grade);
-                            WriteLine("\n\nThe new grade was succesfully added.");
-                            WriteLine("Press any key to continue...");
-                            ReadKey();
-                            break;
-                        default:
-                            break;
+                        ConsoleKeyInfo key = ReadKey(true);
+                        switch (key.Key)
+                        {
+                            case ConsoleKey.RightArrow:
+                                count = (count < n - 1) ? count + 1 : 0;
+                                SetCursorPosition(posX, posY);
+                                Write(new string(' ', WindowWidth));
+                                SetCursorPosition(posX, posY);
+                                Write($"< {students[count].FirstName} {students[count].LastName} >");
+                                break;
+                            case ConsoleKey.LeftArrow:
+                                count = (count == 0) ? n - 1 : count - 1;
+                                SetCursorPosition(posX, posY);
+                                Write(new string(' ', WindowWidth));
+                                SetCursorPosition(posX, posY);
+                                Write($"< {students[count].FirstName} {students[count].LastName} >");
+                                break;
+                            case ConsoleKey.Enter:
+                                enterPressed = true;
+                                int grade = ChooseGrade();
+                                students[count].grades.Add(grade);
+                                WriteLine("\n\nThe new grade was succesfully added.");
+                                WriteLine("Press any key to continue...");
+                                ReadKey();
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
-            }
+            }      
         }
 
         private int ChooseGrade()
@@ -453,54 +461,63 @@ namespace cs_6._1_collections
 
         private void AddStudent()
         {
-            Write("\nAdd first name -> ");
-            string newFirstName = ReadLine();
-            Write("Add last name -> ");
-            string newLastName = ReadLine();
-            Write("\nAssign a teacher -> ");
-
-            int n = teachers.Count;
-            int count = 0;
-            bool enterPressed = false;
-
-            Write($"< {teachers[count].FirstName} {teachers[count].LastName} >");
-
-            while (!enterPressed)
+            if (teachers.Count == 0)
             {
-                int posX = 20;
-                int posY = 17;
-                if (KeyAvailable)
+                WriteLine("You need to add at least one teacher first.");
+                WriteLine("Press any key to continue...");
+                ReadKey();
+            } else
+            {
+                Write("\nAdd first name -> ");
+                string newFirstName = ReadLine();
+                Write("Add last name -> ");
+                string newLastName = ReadLine();
+                Write("\nAssign a teacher -> ");
+
+                int n = teachers.Count;
+                int count = 0;
+                bool enterPressed = false;
+
+                Write($"< {teachers[count].FirstName} {teachers[count].LastName} >");
+
+                while (!enterPressed)
                 {
-                    ConsoleKeyInfo key = ReadKey(true);
-                    switch (key.Key)
+                    int posX = 20;
+                    int posY = 17;
+                    if (KeyAvailable)
                     {
-                        case ConsoleKey.RightArrow:
-                            count = (count < n - 1) ? count + 1 : 0;
-                            SetCursorPosition(posX, posY);
-                            Write(new string(' ', WindowWidth));
-                            SetCursorPosition(posX, posY);
-                            Write($"< {teachers[count].FirstName} {teachers[count].LastName} >");
-                            break;
-                        case ConsoleKey.LeftArrow:
-                            count = (count == 0) ? n - 1 : count - 1;
-                            SetCursorPosition(posX, posY);
-                            Write(new string(' ', WindowWidth));
-                            SetCursorPosition(posX, posY);
-                            Write($"< {teachers[count].FirstName} {teachers[count].LastName} >");
-                            break;
-                        case ConsoleKey.Enter:
-                            enterPressed = true;
-                            students.Add(new Student(newFirstName, newLastName, count));
-                            teachers[count].myStudents.Add(students[students.Count - 1].StudentID);
-                            WriteLine("\n\nThe new student was succesfully added.");
-                            WriteLine("Press any key to continue...");
-                            ReadKey();
-                            break;
-                        default:
-                            break;
+                        ConsoleKeyInfo key = ReadKey(true);
+                        switch (key.Key)
+                        {
+                            case ConsoleKey.RightArrow:
+                                count = (count < n - 1) ? count + 1 : 0;
+                                SetCursorPosition(posX, posY);
+                                Write(new string(' ', WindowWidth));
+                                SetCursorPosition(posX, posY);
+                                Write($"< {teachers[count].FirstName} {teachers[count].LastName} >");
+                                break;
+                            case ConsoleKey.LeftArrow:
+                                count = (count == 0) ? n - 1 : count - 1;
+                                SetCursorPosition(posX, posY);
+                                Write(new string(' ', WindowWidth));
+                                SetCursorPosition(posX, posY);
+                                Write($"< {teachers[count].FirstName} {teachers[count].LastName} >");
+                                break;
+                            case ConsoleKey.Enter:
+                                enterPressed = true;
+                                students.Add(new Student(newFirstName, newLastName, count));
+                                teachers[count].myStudents.Add(students[students.Count - 1].StudentID);
+                                WriteLine("\n\nThe new student was succesfully added.");
+                                WriteLine("Press any key to continue...");
+                                ReadKey();
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
             }
+            
         }
 
         private void ListAllTeachers()
