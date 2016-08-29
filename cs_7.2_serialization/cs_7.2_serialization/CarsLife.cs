@@ -33,6 +33,7 @@ namespace cs_7._2_serialization
         public void AddParkedCar(Car carToPark)
         {
             parkedCars.Add(carToPark);
+            availableCars.Remove(carToPark);
         }
 
         public void RemoveParkedCar(int index)
@@ -43,11 +44,54 @@ namespace cs_7._2_serialization
         public void AddBrokenCar(Car brokenCar)
         {
             brokenCars.Add(brokenCar);
+            availableCars.Remove(brokenCar);
         }
 
         public void RemoveBrokenCar(int index)
         {
             brokenCars.RemoveAt(index);
+        }
+
+        public Car GetAvailableCar(int index)
+        {
+            return availableCars[index];
+        }
+
+        public Car GetBrokenCar(int index)
+        {
+            return brokenCars[index];
+        }
+
+        public Car GetParkedCar(int index)
+        {
+            return parkedCars[index];
+        }
+
+        public int GetNumberOfAvailableCars()
+        {
+            return availableCars.Count;
+        }
+
+        public int GetNumberOfBrokenCars()
+        {
+            return brokenCars.Count;
+        }
+
+        public int GetNumberOfParkedCars()
+        {
+            return parkedCars.Count;
+        }
+
+        public void FromParkedToService(Car toMove)
+        {
+            parkedCars.Add(toMove);
+            brokenCars.Remove(toMove);
+        }
+
+        public void FromServiceToParked(Car toMove)
+        {
+            brokenCars.Add(toMove);
+            parkedCars.Remove(toMove);
         }
     }
 }

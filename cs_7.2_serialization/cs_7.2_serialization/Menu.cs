@@ -75,8 +75,10 @@ namespace cs_7._2_serialization
                             MovefromParkingToService();
                             break;
                         case 7:
+                            MoveFromServiceToParking();
                             break;
                         case 8:
+
                             break;
                         case 9:
                             break;
@@ -91,6 +93,54 @@ namespace cs_7._2_serialization
                 }
                 Clear();
             }
+        }
+
+        private void MoveFromServiceToParking()
+        {
+            cars.FromServiceToParked(ChooseCarFromServiceStation());
+
+            WriteLine("Press any key to continue...");
+            ReadKey();
+        }
+
+        private Car ChooseCarFromServiceStation()
+        {
+            int n = cars.GetNumberOfParkedCars();
+            bool enterPressed = false;
+            int count = 0;
+            Write($"< {cars.GetBrokenCar(count)} >");
+
+            while (!enterPressed)
+            {
+                int posX = 20;
+                int posY = 14;
+
+                if (KeyAvailable)
+                {
+                    ConsoleKeyInfo key = ReadKey(true);
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.RightArrow:
+                            count = (count < n - 1) ? count + 1 : 0;
+                            SetCursorPosition(posX, posY);
+                            Write(new string(' ', WindowWidth));
+                            SetCursorPosition(posX, posY);
+                            Write($"< {cars.GetBrokenCar(count)} >");
+                            break;
+                        case ConsoleKey.LeftArrow:
+                            count = (count == 0) ? n - 1 : count - 1;
+                            SetCursorPosition(posX, posY);
+                            Write(new string(' ', WindowWidth));
+                            SetCursorPosition(posX, posY);
+                            Write($"< {cars.GetBrokenCar(count)} >");
+                            break;
+                        case ConsoleKey.Enter:
+                            enterPressed = true;
+                            return cars.GetBrokenCar(count);
+                    }
+                }
+            }
+            return null;
         }
 
         private void MovefromParkingToService()
