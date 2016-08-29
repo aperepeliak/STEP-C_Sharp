@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using static System.Console;
+
 namespace cs_7._2_serialization
 {
     public enum Color { Black, Green, Red, Navy, Olive, White, Pink };
 
-    public enum Model { BMW, ZAZ, Mercedes, Mazda, VAZ, Nissan, Honda, Subaru, Toyota, VW};
+    public enum Model { BMW, ZAZ, Mercedes, Mazda, VAZ, Nissan, Honda, Subaru, Toyota, VW };
 
     [Serializable]
     public class Car
@@ -28,6 +30,13 @@ namespace cs_7._2_serialization
         {
             CarColor = col;
             CarModel = mod;
+        }
+
+        public void Show()
+        {
+            WriteLine($"Car number:\t{Number}");
+            WriteLine($"Car color:\t{CarColor}");
+            WriteLine($"Car model:\t{CarModel}");
         }
 
     }
