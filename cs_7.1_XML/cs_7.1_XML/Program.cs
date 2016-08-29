@@ -11,6 +11,9 @@ using static System.Console;
 
 namespace cs_7._1_XML
 {
+    /// <summary>
+    /// Хранение прогноза на день
+    /// </summary>
     struct ForecastDay
     {
         public string day;
@@ -19,6 +22,9 @@ namespace cs_7._1_XML
         public string description;
     }
 
+    /// <summary>
+    /// Приложение выводит прогноз погоды в Киеве на ближайшую неделю. Данные получены с помощью API сайта pogoda.com
+    /// </summary>
     class Program
     {
         static void Main(string[] args)
