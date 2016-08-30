@@ -34,10 +34,12 @@ namespace cs_7._2_serialization
 
         public void Show()
         {
-            WriteLine($"Car number:\t{Number}");
-            WriteLine($"Car color:\t{CarColor}");
-            WriteLine($"Car model:\t{CarModel}");
+            WriteLine($"\t|--{CarColor} {CarModel}, #{Number}");
         }
 
+        public void ShowModel()
+        {
+            WriteLine($"\t|--{CarModel}");
+        }
     }
 }

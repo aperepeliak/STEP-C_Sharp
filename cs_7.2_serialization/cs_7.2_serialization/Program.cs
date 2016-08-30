@@ -10,6 +10,8 @@ namespace cs_7._2_serialization
     {
         static void Main(string[] args)
         {
+            Menu menu = new Menu();
+            menu.Start();
         }
     }
 }

@@ -12,23 +12,36 @@ using static System.Convert;
 
 namespace cs_7._2_serialization
 {
+    /// <summary>
+    /// Class menu for manipulation with Car objects
+    /// </summary>
     class Menu
     {
         AllCars cars;
 
+        /// <summary>
+        /// Constructor. Deserializes data from Cars.xml
+        /// </summary>
         public Menu()
         {
-            using (var stream = new FileStream("Cars.xml", FileMode.Open))
+            FileInfo file = new FileInfo("Cars.xml");
+            if (file.Exists)
             {
-                XmlSerializer serialize = new XmlSerializer(typeof(AllCars));
-                cars = serialize.Deserialize(stream) as AllCars;
+                using (var stream = new FileStream("Cars.xml", FileMode.Open))
+                {
+                    XmlSerializer serialize = new XmlSerializer(typeof(AllCars));
+                    cars = serialize.Deserialize(stream) as AllCars;
+                }
             }
-            if (cars == null)
+            else
             {
                 cars = new AllCars();
             }
         }
 
+        /// <summary>
+        /// Main menu
+        /// </summary>
         public void Start()
         {
             bool f = true;
@@ -42,9 +55,10 @@ namespace cs_7._2_serialization
                 WriteLine("5. Show cars on parking lot");
                 WriteLine("6. Move car from parking lot to service station");
                 WriteLine("7. Move car from service station to parking lot");
-                WriteLine("8. Remove car with the number starting from 18");
+                WriteLine("8. Remove car by number");
                 WriteLine("9. Show all cars of red color");
                 WriteLine("10. Show models that are both in parking lot and service station");
+                WriteLine("11. Show available cars");
                 WriteLine("0. Exit");
                 Write("Your choice -> ");
 
@@ -61,9 +75,11 @@ namespace cs_7._2_serialization
                             break;
                         case 2:
                             AddToServiceCenter();
+                            SaveChanges();
                             break;
                         case 3:
                             AddToParkingLot();
+                            SaveChanges();
                             break;
                         case 4:
                             ShowCarsInServiceCenter();
@@ -73,46 +89,85 @@ namespace cs_7._2_serialization
                             break;
                         case 6:
                             MovefromParkingToService();
+                            SaveChanges();
                             break;
                         case 7:
                             MoveFromServiceToParking();
+                            SaveChanges();
                             break;
                         case 8:
-
+                            RemoveCarByNumber();
+                            SaveChanges();
                             break;
                         case 9:
+                            ShowRedCars();
                             break;
                         case 10:
+                            ModelsParkedAndServiced();
+                            break;
+                        case 11:
+                            ShowAvailableCars();
                             break;
                     }
                 }
-                catch
+                catch (Exception e)
                 {
-                    WriteLine("Invalid input, try again");
+                    WriteLine(e.Message);
                     ReadKey();
                 }
                 Clear();
             }
         }
 
+        private void ModelsParkedAndServiced()
+        {
+            cars.ShowParkedAndServicedModels();
+            Footer();
+        }
+
+        private void ShowRedCars()
+        {
+            cars.ShowRed();
+            Footer();
+        }
+
+        private void RemoveCarByNumber()
+        {
+            Write("Enter car number to remove -> ");
+            int carNumber = ToInt32(ReadLine());
+            cars.RemoveByNumber(carNumber);
+            WriteLine($"\nThe car with the number {carNumber} has been removed.");
+            Footer();
+        }
+
+        private void ShowAvailableCars()
+        {
+            for (int i = 0; i < cars.GetNumberOfAvailableCars(); i++)
+            {
+                cars.GetAvailableCar(i).Show();
+            }
+
+            Footer();
+        }
+
         private void MoveFromServiceToParking()
         {
             cars.FromServiceToParked(ChooseCarFromServiceStation());
 
-            WriteLine("Press any key to continue...");
-            ReadKey();
+            Footer();
         }
 
         private Car ChooseCarFromServiceStation()
         {
-            int n = cars.GetNumberOfParkedCars();
+            int n = cars.GetNumberOfBrokenCars();
             bool enterPressed = false;
             int count = 0;
-            Write($"< {cars.GetBrokenCar(count)} >");
+            Write("Choose car from service station -> ");
+            Write($"< {cars.GetBrokenCar(count).CarColor} {cars.GetBrokenCar(count).CarModel}, №{cars.GetBrokenCar(count).Number} >");
 
             while (!enterPressed)
             {
-                int posX = 20;
+                int posX = 35;
                 int posY = 14;
 
                 if (KeyAvailable)
@@ -125,14 +180,14 @@ namespace cs_7._2_serialization
                             SetCursorPosition(posX, posY);
                             Write(new string(' ', WindowWidth));
                             SetCursorPosition(posX, posY);
-                            Write($"< {cars.GetBrokenCar(count)} >");
+                            Write($"< {cars.GetBrokenCar(count).CarColor} {cars.GetBrokenCar(count).CarModel}, №{cars.GetBrokenCar(count).Number} >");
                             break;
                         case ConsoleKey.LeftArrow:
                             count = (count == 0) ? n - 1 : count - 1;
                             SetCursorPosition(posX, posY);
                             Write(new string(' ', WindowWidth));
                             SetCursorPosition(posX, posY);
-                            Write($"< {cars.GetBrokenCar(count)} >");
+                            Write($"< {cars.GetBrokenCar(count).CarColor} {cars.GetBrokenCar(count).CarModel}, №{cars.GetBrokenCar(count).Number} >");
                             break;
                         case ConsoleKey.Enter:
                             enterPressed = true;
@@ -147,8 +202,7 @@ namespace cs_7._2_serialization
         {
             cars.FromParkedToService(ChooseCarFromParkingLot());
 
-            WriteLine("Press any key to continue...");
-            ReadKey();
+            Footer();
         }
 
         private Car ChooseCarFromParkingLot()
@@ -156,11 +210,12 @@ namespace cs_7._2_serialization
             int n = cars.GetNumberOfParkedCars();
             bool enterPressed = false;
             int count = 0;
-            Write($"< {cars.GetParkedCar(count)} >");
+            Write("Choose car from parking lot -> ");
+            Write($"< {cars.GetParkedCar(count).CarColor} {cars.GetParkedCar(count).CarModel}, №{cars.GetParkedCar(count).Number} >");
 
             while (!enterPressed)
             {
-                int posX = 20;
+                int posX = 31;
                 int posY = 14;
 
                 if (KeyAvailable)
@@ -173,14 +228,14 @@ namespace cs_7._2_serialization
                             SetCursorPosition(posX, posY);
                             Write(new string(' ', WindowWidth));
                             SetCursorPosition(posX, posY);
-                            Write($"< {cars.GetParkedCar(count)} >");
+                            Write($"< {cars.GetParkedCar(count).CarColor} {cars.GetParkedCar(count).CarModel}, №{cars.GetParkedCar(count).Number} >");
                             break;
                         case ConsoleKey.LeftArrow:
                             count = (count == 0) ? n - 1 : count - 1;
                             SetCursorPosition(posX, posY);
                             Write(new string(' ', WindowWidth));
                             SetCursorPosition(posX, posY);
-                            Write($"< {cars.GetParkedCar(count)} >");
+                            Write($"< {cars.GetParkedCar(count).CarColor} {cars.GetParkedCar(count).CarModel}, №{cars.GetParkedCar(count).Number} >");
                             break;
                         case ConsoleKey.Enter:
                             enterPressed = true;
@@ -198,8 +253,7 @@ namespace cs_7._2_serialization
                 cars.GetParkedCar(i).Show();
             }
 
-            WriteLine("Press any key to continue...");
-            ReadKey();
+            Footer();
         }
 
         private void ShowCarsInServiceCenter()
@@ -209,24 +263,20 @@ namespace cs_7._2_serialization
                 cars.GetBrokenCar(i).Show();
             }
 
-            WriteLine("Press any key to continue...");
-            ReadKey();
+            Footer();
         }
 
         private void AddToParkingLot()
         {
             cars.AddParkedCar(ChooseCarFromAvailable());
 
-            WriteLine("Press any key to continue...");
-            ReadKey();
+            Footer();
         }
 
         private void AddToServiceCenter()
         {
             cars.AddBrokenCar(ChooseCarFromAvailable());
-
-            WriteLine("Press any key to continue...");
-            ReadKey();
+            Footer();
         }
 
         private Car ChooseCarFromAvailable()
@@ -234,11 +284,12 @@ namespace cs_7._2_serialization
             int n = cars.GetNumberOfAvailableCars();
             bool enterPressed = false;
             int count = 0;
-            Write($"< {cars.GetAvailableCar(count)} >");
+            Write("Choose available car -> ");
+            Write($"< {cars.GetAvailableCar(count).CarColor} {cars.GetAvailableCar(count).CarModel} №:{cars.GetAvailableCar(count).Number} >");
 
             while (!enterPressed)
             {
-                int posX = 20;
+                int posX = 24;
                 int posY = 14;
 
                 if (KeyAvailable)
@@ -251,14 +302,14 @@ namespace cs_7._2_serialization
                             SetCursorPosition(posX, posY);
                             Write(new string(' ', WindowWidth));
                             SetCursorPosition(posX, posY);
-                            Write($"< {cars.GetAvailableCar(count)} >");
+                            Write($"< {cars.GetAvailableCar(count).CarColor} {cars.GetAvailableCar(count).CarModel} №:{cars.GetAvailableCar(count).Number} >");
                             break;
                         case ConsoleKey.LeftArrow:
                             count = (count == 0) ? n - 1 : count - 1;
                             SetCursorPosition(posX, posY);
                             Write(new string(' ', WindowWidth));
                             SetCursorPosition(posX, posY);
-                            Write($"< {cars.GetAvailableCar(count)} >");
+                            Write($"< {cars.GetAvailableCar(count).CarColor} {cars.GetAvailableCar(count).CarModel} №:{cars.GetAvailableCar(count).Number} >");
                             break;
                         case ConsoleKey.Enter:
                             enterPressed = true;
@@ -281,12 +332,14 @@ namespace cs_7._2_serialization
             string[] modelNames = Enum.GetNames(typeof(Model));
             int count = 0;
             bool enterPressed = false;
+            Write($"\nChoose model -> ");
+
             Write($"< {modelNames[count]} >");
 
             while (!enterPressed)
             {
-                int posX = 20;
-                int posY = 14;
+                int posX = 16;
+                int posY = 15;
 
                 if (KeyAvailable)
                 {
@@ -309,7 +362,7 @@ namespace cs_7._2_serialization
                             break;
                         case ConsoleKey.Enter:
                             enterPressed = true;
-                            result = (Model)ToInt32(modelNames[count]);
+                            result = (Model)count;
                             break;
                     }
                 }
@@ -324,11 +377,12 @@ namespace cs_7._2_serialization
             string[] colorNames = Enum.GetNames(typeof(Color));
             int count = 0;
             bool enterPressed = false;
+            Write($"Choose color -> ");
             Write($"< {colorNames[count]} >");
 
             while (!enterPressed)
             {
-                int posX = 20;
+                int posX = 16;
                 int posY = 14;
 
                 if (KeyAvailable)
@@ -352,7 +406,7 @@ namespace cs_7._2_serialization
                             break;
                         case ConsoleKey.Enter:
                             enterPressed = true;
-                            result = (Color)ToInt32(colorNames[count]);
+                            result = (Color)count;
                             break;
                     }
                 }
@@ -360,12 +414,21 @@ namespace cs_7._2_serialization
             return result;
         }
 
+        /// <summary>
+        /// Serializes data after each change
+        /// </summary>
         private void SaveChanges()
         {
             XmlSerializer serialize = new XmlSerializer(typeof(AllCars));
             var stream = new FileStream("Cars.xml", FileMode.Create, FileAccess.Write);
             serialize.Serialize(stream, cars);
             stream.Close();
+        }
+
+        private void Footer()
+        {
+            WriteLine("\nPress any key to continue...");
+            ReadKey();
         }
     }
 }
